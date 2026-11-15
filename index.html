@@ -320,7 +320,12 @@ const UI={
 };
 function t(k){let s=(UI[S.lang]&&UI[S.lang][k]!=null)?UI[S.lang][k]:UI.it[k];if(s==null)return k;for(let i=1;i<arguments.length;i++)s=s.split("{"+(i-1)+"}").join(arguments[i]);return s}
 function applyChrome(){document.documentElement.lang=S.lang;$("#q").placeholder=t("search_ph");const b=document.querySelector("header .brand");if(b)b.title=t("home_title");const ls=$("#langsel");if(ls)ls.title=t("lang_title")}
-const SIG={"01":"Cost.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capitolo","06":"RSFSA","06a":"Formulari","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministeri","10":"NORFSA","10a":"Codice di condotta","10b":"Allegati NORFSA","12":"RITFSA","13":"Vademecum","13c":"Vademecum stranieri","14":"Devozionario","15":"Servizio dell’autorità","16":"Reg. convenzioni","17":"Cammino"};
+const SIG={
+ it:{"01":"Cost.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capitolo","06":"RSFSA","06a":"Formulari","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministeri","10":"NORFSA","10a":"Codice di condotta","10b":"Allegati NORFSA","12":"RITFSA","13":"Vademecum","13c":"Vademecum stranieri","14":"Devozionario","15":"Il servizio dell’autorità","16":"Reg. convenzioni","17":"Cammino"},
+ pt:{"01":"Const.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capítulo","06":"RSFSA","06a":"Formulários","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministérios","10":"NORFSA","10a":"Código de Conduta","10b":"Anexos NORFSA","12":"RITFSA","13":"Vademecum","13c":"Vademecum","14":"Devocionário","15":"O serviço da autoridade","16":"Reg. convênios","17":"Caminho"},
+ es:{"01":"Const.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capítulo","06":"RSFSA","06a":"Formularios","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministerios","10":"NORFSA","10a":"Código de Conducta","10b":"Anexos NORFSA","12":"RITFSA","13":"Vademécum","13c":"Vademécum","14":"Devocionario","15":"El servicio de la autoridad","16":"Reg. convenios","17":"Camino"},
+ en:{"01":"Const.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Chapter Reg.","06":"RSFSA","06a":"Forms","07":"Visitation Reg.","08":"Consultation Reg.","09":"Ministries Reg.","10":"NORFSA","10a":"Code of Conduct","10b":"NORFSA Annexes","12":"RITFSA","13":"Vademecum","13c":"Vademecum","14":"Devotional","15":"The Service of Authority","16":"Agreements Reg.","17":"The Way"}
+};
 const UNITN={"01":1,"10":1,"17":1,"03":1};
 /* Stato di ogni libro: per cambiarlo basta modificare questa tabella. */
 const STATUS={"01":["ok","status_approved"]};
@@ -347,7 +352,8 @@ function idx(d){if(d.ix)return d.ix;const art=new Map(),sec=new Map(),note=new M
  for(const bi in d.R)for(const r of d.R[bi])if(r[3]===""){const ni=note.get(r[4]);if(ni!=null)own[ni]=own[bi]>=0?own[bi]:-1}
  return d.ix={art,sec,note,own}}
 function unit(num){return UNITN[num]?t("unit_n"):t("unit_art")}
-function labelOf(d,i){const b=d.b[i];if(b.t==="n")return `${SIG[d.num]||d.title}, ${t("note_word")} ${b.n}`;if(b.s)return `${SIG[d.num]}, ${b.s}`;if(b.n)return `${SIG[d.num]||d.title}, ${unit(d.num)} ${b.n}`;return `${SIG[d.num]||d.title}${b.h?" · "+b.h:""}`}
+function sig(lang,num){return (SIG[lang]&&SIG[lang][num])||(SIG.it&&SIG.it[num])}
+function labelOf(d,i){const b=d.b[i];const s=sig(d.lang,d.num);if(b.t==="n")return `${s||d.title}, ${t("note_word")} ${b.n}`;if(b.s)return `${s}, ${b.s}`;if(b.n)return `${s||d.title}, ${unit(d.num)} ${b.n}`;return `${s||d.title}${b.h?" · "+b.h:""}`}
 function target(t,k){const d=byId["it-"+t];if(!d)return null;const ix=idx(d);k=String(k);let i=(t==="03"||k.includes("."))?ix.sec.get(k):ix.art.get(+k);return i==null?null:{d,i}}
 let REV=null;
 function rev(){if(REV)return REV;REV=new Map();for(const d of docs){if(!d.hasR)continue;const ix=idx(d);for(const bi in d.R)for(const r of d.R[bi]){if(r[3]==="")continue;const a=r[4],b2=r[5];const keys=(typeof a==="number"&&typeof b2==="number")?Array.from({length:b2-a+1},(_,j)=>a+j):[a];let o=ix.own[bi];for(const k of keys){const key=r[3]+"|"+k;let L=REV.get(key);if(!L)REV.set(key,L=[]);L.push({d,bi:+bi,o})}}}return REV}
@@ -453,7 +459,7 @@ function renderSearch(s){S.docMode=false;S.q=s.q;S.mode=s.mode||"q";$("#q").valu
 function hitHtml(d,i,showDoc){const b=d.b[i];let x=b.x,z=Z(b),pre="",suf="";
  if(x.length>420){const rr=S.art?[]:ranges(z,S.terms);const p=rr.length?rr[0][0]:0;let s=Math.max(0,p-140),e=Math.min(x.length,p+280);if(s>0){const k=x.indexOf(" ",s);if(k>=0&&k<p)s=k+1;pre="… "}if(e<x.length){const k=x.lastIndexOf(" ",e);if(k>p)e=k;suf=" …"}x=x.slice(s,e);z=z.slice(s,e)}
  const body=(pre+(S.art?esc(x):hl(x,z,S.terms))+suf).replace(/ ‖ /g," · ");
- const ix=idx(d),o=ix.own[i];const where=b.t==="n"?labelOf(d,i):(o>=0?labelOf(d,o):(SIG[d.num]||d.num));
+ const ix=idx(d),o=ix.own[i];const where=b.t==="n"?labelOf(d,i):(o>=0?labelOf(d,o):(sig(d.lang,d.num)||d.num));
  const ctx=`<span class="doc">${esc(where)}</span>`+(showDoc?` · ${esc(d.title)}`:"")+(b.h&&!(o>=0&&d.b[o].s)?` · ${esc(b.h)}`:"");
  return `<div class="hit" data-open="${d.id}" data-blk="${i}"><div class="ctx">${ctx}</div><div class="tx">${body}</div></div>`}
 /* ---------- lettore */
@@ -478,7 +484,7 @@ function closeDrawer(){$("#drawer").classList.remove("on");if(!PK.length)$("#sha
 /* ---------- scheda (rinvio aperto) */
 const PK=[];
 function artBlocks(d,i){const b=d.b[i],out=[i];if(b.t==="n")return out;for(let j=i+1;j<d.b.length&&out.length<70;j++){const c=d.b[j];if(c.t==="n")break;if(b.t==="h"){if(c.t==="h"&&(c.s||c.l<=b.l))break}else if(c.t==="h"||(c.t==="p"&&c.n))break;out.push(j)}return out}
-function refLabel(t,k,k2){return `${SIG[t]}${t==="03"?", ":", "+unit(t)+" "}${k}${k2?"–"+k2:""}`}
+function refLabel(lang,num,k,k2){return `${sig(lang,num)}${num==="03"?", ":", "+unit(num)+" "}${k}${k2?"–"+k2:""}`}
 function openPeek(d,i,keep){if(!keep)PK.length=PK.length;PK.push({d,i});drawPeek()}
 function drawPeek(){const {d,i}=PK[PK.length-1];const p=$("#peek");const list=artBlocks(d,i);const b=d.b[i];
  const notes=[];const out=new Map();const ix=idx(d);
@@ -488,7 +494,7 @@ function drawPeek(){const {d,i}=PK[PK.length-1];const p=$("#peek");const list=ar
  const rank=n=>n==="01"?0:n==="02"?1:n==="03"?2:3;const outs=[...out.values()].sort((a,c)=>rank(a[3])-rank(c[3])||a[3].localeCompare(c[3])||String(a[4]).localeCompare(String(c[4]),undefined,{numeric:true}));
  const byBook=new Map();for(const c of cb){if(!byBook.has(c.d.num))byBook.set(c.d.num,[]);byBook.get(c.d.num).push(c)}
  let h=`<div class="phead">${PK.length>1?`<button class="x" onclick="PK.pop();drawPeek()">←</button>`:""}<b>${esc(labelOf(d,i))}<br><span class="st ${stOf(d)[0]}" style="font-weight:400"><i></i>${esc(d.title)}</span></b><button class="x" onclick="closePeek()">✕</button></div><div class="pbody"><div class="ptext">${blocksHtml(d,list,null)}${notes.length?`<div class="plab">Note</div>`+blocksHtml(d,notes,null):""}</div>`;
- if(outs.length)h+=`<div class="plab">${esc(t("peek_based_on"))}</div><div class="links">${outs.map(r=>`<span class="lk ${r[3]==="01"?"top":""} rf" data-t="${r[3]}" data-k="${r[4]}">${esc(refLabel(r[3],r[4],r[5]))}</span>`).join("")}</div>`;
+ if(outs.length)h+=`<div class="plab">${esc(t("peek_based_on"))}</div><div class="links">${outs.map(r=>`<span class="lk ${r[3]==="01"?"top":""} rf" data-t="${r[3]}" data-k="${r[4]}">${esc(refLabel(d.lang,r[3],r[4],r[5]))}</span>`).join("")}</div>`;
  if(cb.length){h+=`<div class="plab">${esc(t("peek_cited_by").split("{0}").join(cb.length))}</div>`;for(const [num,L] of [...byBook].sort((a,c)=>a[0].localeCompare(c[0])))h+=`<div class="links" style="margin-bottom:6px">${L.slice(0,40).map(c=>`<span class="lk" data-peek="${c.d.id}|${c.o>=0?c.o:c.bi}" ${c.o<0?`data-raw="1"`:""}>${esc(c.o>=0?labelOf(c.d,c.o):labelOf(c.d,c.bi))}</span>`).join("")}</div>`}
  h+=`<div class="pact"><button data-open="${d.id}" data-blk="${i}">${esc(t("peek_open_book"))}</button><button class="sec" id="cpy">${esc(t("peek_copy"))}</button></div></div>`;
  p.innerHTML=h;p.classList.add("on");$("#shade").className="on pk";document.body.classList.add("pk");p.querySelector(".pbody").scrollTop=0;
