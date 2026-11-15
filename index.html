@@ -181,8 +181,9 @@ const UI={
   tile3_t:"Scadenze",tile3_d:"Relazioni, rendiconti e adempimenti lungo l’anno.",
   tile4_t:"Le Costituzioni",tile4_d:"Il fondamento: tutti gli altri libri le applicano.",
   notice_tavole_only_it:"La tavola «Chi decide?» è disponibile per ora solo in italiano.",
-  group_fondamento:"Il fondamento",group_dirform:"Direttorio e formazione",group_governo:"Governo e amministrazione",
-  group_minist:"Ministeri, separazione, tutela",group_preghiera:"Preghiera e vita quotidiana",group_altri:"Altri testi",
+  group_fondamento:"Il fondamento",group_direttorio:"Direttorio",group_formazione:"Formazione, ministeri e separazione",
+  group_governo:"Governo e amministrazione",group_tutela:"Tutela",group_preghiera:"Preghiera: Rituale dell’Istituto",
+  group_sintesi:"Sintesi",group_altri:"Altri testi",
   legend_approved:"Testo approvato: solo il Capitolo Generale può modificarlo.",
   legend_revised:"Testo rivisto nell’ottobre 2026, da rivedere dopo il II Capitolo Generale.",
   legend_collected:"Testi raccolti il {0}. Tocca un rinvio sottolineato (es. Cost., n. 21) per leggerlo senza perdere il segno.",
@@ -217,8 +218,9 @@ const UI={
   tile3_t:"Prazos",tile3_d:"Relatórios, prestações de contas e obrigações ao longo do ano.",
   tile4_t:"As Constituições",tile4_d:"O fundamento: todos os outros livros as aplicam.",
   notice_tavole_only_it:"A tabela «Quem decide?» está disponível por agora só em italiano.",
-  group_fondamento:"O fundamento",group_dirform:"Diretório e formação",group_governo:"Governo e administração",
-  group_minist:"Ministérios, separação, proteção",group_preghiera:"Oração e vida quotidiana",group_altri:"Outros textos",
+  group_fondamento:"O fundamento",group_direttorio:"Diretório",group_formazione:"Formação, ministérios e separação",
+  group_governo:"Governo e administração",group_tutela:"Proteção",group_preghiera:"Oração: Ritual do Instituto",
+  group_sintesi:"Síntese",group_altri:"Outros textos",
   legend_approved:"Texto aprovado: só o Capítulo Geral pode modificá-lo.",
   legend_revised:"Texto revisto em outubro de 2026, a rever depois do II Capítulo Geral.",
   legend_collected:"Textos reunidos em {0}. Toca numa remissão sublinhada (ex. Const., n. 21) para a ler sem perder o lugar.",
@@ -253,8 +255,9 @@ const UI={
   tile3_t:"Plazos",tile3_d:"Informes, rendiciones de cuentas y obligaciones a lo largo del año.",
   tile4_t:"Las Constituciones",tile4_d:"El fundamento: todos los demás libros las aplican.",
   notice_tavole_only_it:"La tabla «¿Quién decide?» está disponible por ahora solo en italiano.",
-  group_fondamento:"El fundamento",group_dirform:"Directorio y formación",group_governo:"Gobierno y administración",
-  group_minist:"Ministerios, separación, protección",group_preghiera:"Oración y vida cotidiana",group_altri:"Otros textos",
+  group_fondamento:"El fundamento",group_direttorio:"Directorio",group_formazione:"Formación, ministerios y separación",
+  group_governo:"Gobierno y administración",group_tutela:"Protección",group_preghiera:"Oración: Ritual del Instituto",
+  group_sintesi:"Síntesis",group_altri:"Otros textos",
   legend_approved:"Texto aprobado: solo el Capítulo General puede modificarlo.",
   legend_revised:"Texto revisado en octubre de 2026, por revisar después del II Capítulo General.",
   legend_collected:"Textos reunidos el {0}. Toca una remisión subrayada (p. ej. Const., n. 21) para leerla sin perder el lugar.",
@@ -289,8 +292,9 @@ const UI={
   tile3_t:"Deadlines",tile3_d:"Reports, accounts and obligations throughout the year.",
   tile4_t:"The Constitutions",tile4_d:"The foundation: every other book applies them.",
   notice_tavole_only_it:"The “Who decides?” table is available for now only in Italian.",
-  group_fondamento:"The foundation",group_dirform:"Directory and formation",group_governo:"Governance and administration",
-  group_minist:"Ministries, separation, protection",group_preghiera:"Prayer and daily life",group_altri:"Other texts",
+  group_fondamento:"The foundation",group_direttorio:"Directory",group_formazione:"Formation, ministries and separation",
+  group_governo:"Governance and administration",group_tutela:"Protection",group_preghiera:"Prayer: Ritual of the Institute",
+  group_sintesi:"Summary",group_altri:"Other texts",
   legend_approved:"Approved text: only the General Chapter can amend it.",
   legend_revised:"Text revised in October 2026, to be reviewed after the Second General Chapter.",
   legend_collected:"Texts collected on {0}. Tap an underlined cross-reference (e.g. Const., no. 21) to read it without losing your place.",
@@ -321,16 +325,16 @@ const UI={
 function t(k){let s=(UI[S.lang]&&UI[S.lang][k]!=null)?UI[S.lang][k]:UI.it[k];if(s==null)return k;for(let i=1;i<arguments.length;i++)s=s.split("{"+(i-1)+"}").join(arguments[i]);return s}
 function applyChrome(){document.documentElement.lang=S.lang;$("#q").placeholder=t("search_ph");const b=document.querySelector("header .brand");if(b)b.title=t("home_title");const ls=$("#langsel");if(ls)ls.title=t("lang_title")}
 const SIG={
- it:{"01":"Cost.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capitolo","06":"RSFSA","06a":"Formulari","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministeri","10":"NORFSA","10a":"Codice di condotta","10b":"Allegati NORFSA","12":"RITFSA","13":"Vademecum","13c":"Vademecum stranieri","14":"Devozionario","15":"Il servizio dell’autorità","16":"Reg. convenzioni","17":"Cammino"},
- pt:{"01":"Const.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capítulo","06":"RSFSA","06a":"Formulários","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministérios","10":"NORFSA","10a":"Código de Conduta","10b":"Anexos NORFSA","12":"RITFSA","13":"Vademecum","13c":"Vademecum","14":"Devocionário","15":"O serviço da autoridade","16":"Reg. convênios","17":"Caminho"},
- es:{"01":"Const.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capítulo","06":"RSFSA","06a":"Formularios","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministerios","10":"NORFSA","10a":"Código de Conducta","10b":"Anexos NORFSA","12":"RITFSA","13":"Vademécum","13c":"Vademécum","14":"Devocionario","15":"El servicio de la autoridad","16":"Reg. convenios","17":"Camino"},
- en:{"01":"Const.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Chapter Reg.","06":"RSFSA","06a":"Forms","07":"Visitation Reg.","08":"Consultation Reg.","09":"Ministries Reg.","10":"NORFSA","10a":"Code of Conduct","10b":"NORFSA Annexes","12":"RITFSA","13":"Vademecum","13c":"Vademecum","14":"Devotional","15":"The Service of Authority","16":"Agreements Reg.","17":"The Way"}
+ it:{"01":"Cost.","02":"Dir.","03":"Ratio","04":"Reg. ministeri","05":"RSFSA","06":"Formulari","07":"REFSA","08":"Reg. Capitolo","09":"Reg. visita","10":"Reg. Consulta","11":"Vademecum stranieri","12":"Reg. convenzioni","13":"NORFSA","14":"Codice di condotta","15":"Allegati NORFSA","16":"RITFSA","17":"Il servizio dell’autorità","18":"Cammino"},
+ pt:{"01":"Const.","02":"Dir.","03":"Ratio","04":"Reg. ministérios","05":"RSFSA","06":"Formulários","07":"REFSA","08":"Reg. Capítulo","09":"Reg. visita","10":"Reg. Consulta","11":"Vademecum","12":"Reg. convênios","13":"NORFSA","14":"Código de Conduta","15":"Anexos NORFSA","16":"RITFSA","17":"O serviço da autoridade","18":"Caminho"},
+ es:{"01":"Const.","02":"Dir.","03":"Ratio","04":"Reg. ministerios","05":"RSFSA","06":"Formularios","07":"REFSA","08":"Reg. Capítulo","09":"Reg. visita","10":"Reg. Consulta","11":"Vademécum","12":"Reg. convenios","13":"NORFSA","14":"Código de Conducta","15":"Anexos NORFSA","16":"RITFSA","17":"El servicio de la autoridad","18":"Camino"},
+ en:{"01":"Const.","02":"Dir.","03":"Ratio","04":"Ministries Reg.","05":"RSFSA","06":"Forms","07":"REFSA","08":"Chapter Reg.","09":"Visitation Reg.","10":"Consultation Reg.","11":"Vademecum","12":"Agreements Reg.","13":"NORFSA","14":"Code of Conduct","15":"NORFSA Annexes","16":"RITFSA","17":"The Service of Authority","18":"The Way"}
 };
-const UNITN={"01":1,"10":1,"17":1,"03":1};
+const UNITN={"01":1,"13":1,"18":1,"03":1};
 /* Stato di ogni libro: per cambiarlo basta modificare questa tabella. */
 const STATUS={"01":["ok","status_approved"]};
 const STDEF=["rev","status_revised"];
-const GROUPS=[["group_fondamento",["01"]],["group_dirform",["02","03","17"]],["group_governo",["15","04","05","07","08","16"]],["group_minist",["09","06","06a","10","10a","10b"]],["group_preghiera",["12","13","13c","14"]]];
+const GROUPS=[["group_fondamento",["01"]],["group_direttorio",["02"]],["group_formazione",["03","04","05","06"]],["group_governo",["07","08","09","10","11","12"]],["group_tutela",["13","14","15"]],["group_preghiera",["16"]],["group_sintesi",["17","18"]]];
 const norm1=new Map();
 function nc(c){let r=norm1.get(c);if(r===undefined){r=c.normalize("NFD")[0]||c;r=r.toLowerCase();if(r.length!==1)r=c;if(r==="’"||r==="‘"||r==="`"||r==="´")r="'";if(r==="“"||r==="”"||r==="«"||r==="»")r='"';if(r==="–"||r==="—")r="-";norm1.set(c,r)}return r}
 function nz(s){let o="";for(let i=0;i<s.length;i++)o+=nc(s[i]);return o}
@@ -434,7 +438,7 @@ function renderHome(){const v=$("#view");v.scrollTop=0;
  $("#bq").onkeydown=e=>{if(e.key==="Enter")doSearch(e.target.value)};$("#bgo").onclick=()=>doSearch($("#bq").value)}
 function doSearch(q){q=(q||"").trim();if(!q)return;$("#q").value=q;go({v:"res",q,mode:"q"})}
 /* ---------- risultati */
-const JUMP=[["01",/^(?:cost(?:ituzioni)?)\.?/i],["02",/^(?:dir(?:ettorio)?)\.?/i],["03",/^ratio(?: formationis)?/i],["04",/^(?:refsa|reg(?:olamento)?\.? ?econ(?:omico)?\.?)/i],["06",/^rsfsa/i],["10",/^(?:norfsa|normativa)/i],["15",/^(?:servizio|competenze)/i]];
+const JUMP=[["01",/^(?:cost(?:ituzioni)?)\.?/i],["02",/^(?:dir(?:ettorio)?)\.?/i],["03",/^ratio(?: formationis)?/i],["07",/^(?:refsa|reg(?:olamento)?\.? ?econ(?:omico)?\.?)/i],["05",/^rsfsa/i],["13",/^(?:norfsa|normativa)/i],["17",/^(?:servizio|competenze)/i]];
 function jump(q){for(const [t,rx] of JUMP){const m=q.match(rx);if(!m)continue;const r=q.slice(m[0].length).match(/^\s*,?\s*(?:artt?\.?|nn?\.?)?\s*(\d+(?:\.\d+)*)\s*$/i);if(r)return target(t,r[1])}return null}
 function renderSearch(s){S.docMode=false;S.q=s.q;S.mode=s.mode||"q";$("#q").value=s.q;const v=$("#view");v.scrollTop=0;S.art=null;S.terms=[];S.stem=false;S.cnt={};
  const am=S.q.match(/^(?:art(?:t)?\.?|n\.?|nn\.?|n°|numero)\s*(\d{1,4})$/i);const dd=scope();let res=[];
@@ -445,7 +449,7 @@ function renderSearch(s){S.docMode=false;S.q=s.q;S.mode=s.mode||"q";$("#q").valu
  else if(S.mode==="q"){S.stem=true;S.qres=rankQ(S.q);S.terms=S.qres.stems;S.rxs=S.qres.rxs;S.rxsMain=S.qres.rxsMain;const L2=S.qres.list;for(const c of L2)S.cnt[c.d.id]=(S.cnt[c.d.id]||0)+1;
   if(!L2.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>${esc(t("empty_q_title").split("{0}").join(S.q))}</b><p>${esc(t("empty_q_hint"))}</p></div></div>`;return}
   let h=`<div class="wrap">${top}<div class="ans" id="ans"><h4>${esc(t("ans_title"))}</h4><button class="tool" onclick="askClaude()">${esc(t("ans_btn"))}</button><span class="sm">${esc(t("ans_sm"))}</span></div><p class="summary">${esc(t("summary_q").split("{0}").join(S.q))}</p>`;
-  let th="";{const d15=byId[S.lang+"-15"];const okT=S.qres.ok;let n=0;const ua=t("unit_art");
+  let th="";{const d15=byId[S.lang+"-17"];const okT=S.qres.ok;let n=0;const ua=t("unit_art");
    if(d15)for(const tv of tavole(S.lang)){if(tv.code>"E")continue;for(const g of tv.groups)for(const i of g.rows){if(n>=4)break;const b=d15.b[i];if(!okT(Z(b)))continue;const cs=cells(b.x);const last=cs[cs.length-1];const num=parseInt(b.x.slice(last[0],last[1]),10);if(!num)continue;const tg=target("15",num);if(!tg)continue;n++;
      th+=`<div class="hit" data-peek="${S.lang}-15|${tg.i}"><div class="ctx"><span class="doc">${tv.code==="E"?esc(t("tile2_t")):esc(t("tile1_t"))}</span> · ${esc(g.who)}${g.mode&&tv.code!=="E"?" · "+g.mode[1]:""} · ${esc(ua)} ${num}</div><div class="tx">${hl(b.x.slice(cs[0][0],cs[0][1]),Z(b).slice(cs[0][0],cs[0][1]),S.terms)}${cs.length>2&&tv.code==="E"?`<br><span style="font-size:14.5px;color:#444">${esc(b.x.slice(cs[1][0],cs[1][1]))}</span>`:""}</div></div>`}}
    if(th)th=`<h2 class="sec" style="margin-top:6px">${esc(t("from_tavole"))}</h2>`+th+`<h2 class="sec">${esc(t("in_texts"))}</h2>`}
@@ -516,7 +520,7 @@ const TAVCFG={
      m_c:"with the consent of the Council",m_s:"collegially with the Council",m_p:"with the opinion of the Council",m_solo:"alone",m_prop:"proposes · prepares the case · gives the opinion",m_dov:"duties and time limits"}
 };
 const TAVCACHE={};
-function tavole(lang){lang=lang||"it";if(TAVCACHE[lang])return TAVCACHE[lang];const cfg=TAVCFG[lang]||TAVCFG.it;const out=[];TAVCACHE[lang]=out;const d=byId[lang+"-15"];if(!d)return out;let tav=null,grp=null;
+function tavole(lang){lang=lang||"it";if(TAVCACHE[lang])return TAVCACHE[lang];const cfg=TAVCFG[lang]||TAVCFG.it;const out=[];TAVCACHE[lang]=out;const d=byId[lang+"-17"];if(!d)return out;let tav=null,grp=null;
  const headRe=new RegExp("^"+cfg.word+" ([A-F]) · (.*)");
  d.b.forEach((b,i)=>{if(b.t==="h"){const m=b.x.match(headRe);if(m){tav={code:m[1],title:m[2],groups:[],intro:[]};out.push(tav);grp=null;return}
    const g=b.x.match(/^([A-F])\.(\d+) · (.*)/);if(g&&tav){grp={code:g[1]+"."+g[2],title:g[3],note:[],head:null,rows:[],tav};tav.groups.push(grp);return}
@@ -529,7 +533,7 @@ function tavole(lang){lang=lang||"it";if(TAVCACHE[lang])return TAVCACHE[lang];co
   const GT=g.title;g.mode=cfg.consenso.test(GT)?["c",cfg.m_c]:cfg.collegial.test(GT)?["s",cfg.m_s]:cfg.parere.test(GT)&&!cfg.propone.test(GT)?["p",cfg.m_p]:cfg.dasolo.test(GT)?["",cfg.m_solo]:cfg.propone.test(GT)?["",cfg.m_prop]:cfg.doveri.test(GT)?["",cfg.m_dov]:null}
  return out}
 const TABS={get chi(){return [t("tile1_t"),"ABCD",t("tab_chi_d")]},get chiedo(){return [t("tile2_t"),"E",""]},get scad(){return [t("tile3_t"),"F",""]}};
-function renderTav(s){const v=$("#view");const d=byId[S.lang+"-15"];const cfg=TAVCFG[S.lang]||TAVCFG.it;const T=tavole(S.lang);const tab=TABS[s.tab]||TABS.chi;const tavs=T.filter(tv=>tab[1].includes(tv.code));
+function renderTav(s){const v=$("#view");const d=byId[S.lang+"-17"];const cfg=TAVCFG[S.lang]||TAVCFG.it;const T=tavole(S.lang);const tab=TABS[s.tab]||TABS.chi;const tavs=T.filter(tv=>tab[1].includes(tv.code));
  const groups=tavs.flatMap(tv=>tv.groups);const whos=[...new Set(groups.map(g=>g.who))];const f=nz(s.f||"").trim().split(/\s+/).filter(Boolean);
  let h=`<div class="wrap"><div class="tabs">${Object.entries(TABS).map(([k,tb])=>`<button class="${k===(s.tab||"chi")?"on":""}" data-tab="${k}">${tb[0]}</button>`).join("")}</div>`;
  if(!d||!T.length){v.innerHTML=h+`<div class="empty">${esc(t("tav_unavailable"))}</div></div>`;return}
