@@ -422,7 +422,6 @@ function renderHome(){const v=$("#view");v.scrollTop=0;
   <button class="tile" data-go='{"v":"tav","tab":"scad"}'><span class="ic">🗓️</span><b>${esc(t("tile3_t"))}</b><span>${esc(t("tile3_d"))}</span></button>
   <button class="tile" data-go='{"v":"doc","id":"${S.lang}-01"}'><span class="ic">📖</span><b>${esc(t("tile4_t"))}</b><span>${esc(t("tile4_d"))}</span></button>
  </div>
- ${S.lang!=="it"?`<div class="notice">${esc(t("notice_tavole_only_it"))}</div>`:""}
  ${bookList()}
  <div class="legend"><span class="st ok"><i></i>${esc(t("legend_approved"))}</span><span class="st"><i></i>${esc(t("legend_revised"))}</span><span>${esc(t("legend_collected").split("{0}").join(BUILD))}</span></div>
  </div>`;
@@ -440,10 +439,10 @@ function renderSearch(s){S.docMode=false;S.q=s.q;S.mode=s.mode||"q";$("#q").valu
  else if(S.mode==="q"){S.stem=true;S.qres=rankQ(S.q);S.terms=S.qres.stems;S.rxs=S.qres.rxs;S.rxsMain=S.qres.rxsMain;const L2=S.qres.list;for(const c of L2)S.cnt[c.d.id]=(S.cnt[c.d.id]||0)+1;
   if(!L2.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>${esc(t("empty_q_title").split("{0}").join(S.q))}</b><p>${esc(t("empty_q_hint"))}</p></div></div>`;return}
   let h=`<div class="wrap">${top}<div class="ans" id="ans"><h4>${esc(t("ans_title"))}</h4><button class="tool" onclick="askClaude()">${esc(t("ans_btn"))}</button><span class="sm">${esc(t("ans_sm"))}</span></div><p class="summary">${esc(t("summary_q").split("{0}").join(S.q))}</p>`;
-  let th="";if(S.lang==="it"){const d15=byId["it-15"];const okT=S.qres.ok;let n=0;
-   for(const t of tavole()){if(t.code>"E")continue;for(const g of t.groups)for(const i of g.rows){if(n>=4)break;const b=d15.b[i];if(!okT(Z(b)))continue;const cs=cells(b.x);const r=(d15.R[i]||[]).find(r=>r[3]==="15");if(!r)continue;const tg=target("15",r[4]);if(!tg)continue;n++;
-     th+=`<div class="hit" data-peek="it-15|${tg.i}"><div class="ctx"><span class="doc">${t.code==="E"?"Che cosa chiedo, e a chi?":"Chi decide?"}</span> · ${esc(g.who)}${g.mode&&t.code!=="E"?" · "+g.mode[1]:""} · art. ${r[4]}</div><div class="tx">${hl(b.x.slice(cs[0][0],cs[0][1]),Z(b).slice(cs[0][0],cs[0][1]),S.terms)}${cs.length>2&&t.code==="E"?`<br><span style="font-size:14.5px;color:#444">${esc(b.x.slice(cs[1][0],cs[1][1]))}</span>`:""}</div></div>`}}
-   if(th)th=`<h2 class="sec" style="margin-top:6px">Dalle tavole «Chi decide?»</h2>`+th+`<h2 class="sec">Nei testi</h2>`}
+  let th="";{const d15=byId[S.lang+"-15"];const okT=S.qres.ok;let n=0;const ua=t("unit_art");
+   if(d15)for(const tv of tavole(S.lang)){if(tv.code>"E")continue;for(const g of tv.groups)for(const i of g.rows){if(n>=4)break;const b=d15.b[i];if(!okT(Z(b)))continue;const cs=cells(b.x);const last=cs[cs.length-1];const num=parseInt(b.x.slice(last[0],last[1]),10);if(!num)continue;const tg=target("15",num);if(!tg)continue;n++;
+     th+=`<div class="hit" data-peek="${S.lang}-15|${tg.i}"><div class="ctx"><span class="doc">${tv.code==="E"?esc(t("tile2_t")):esc(t("tile1_t"))}</span> · ${esc(g.who)}${g.mode&&tv.code!=="E"?" · "+g.mode[1]:""} · ${esc(ua)} ${num}</div><div class="tx">${hl(b.x.slice(cs[0][0],cs[0][1]),Z(b).slice(cs[0][0],cs[0][1]),S.terms)}${cs.length>2&&tv.code==="E"?`<br><span style="font-size:14.5px;color:#444">${esc(b.x.slice(cs[1][0],cs[1][1]))}</span>`:""}</div></div>`}}
+   if(th)th=`<h2 class="sec" style="margin-top:6px">${esc(t("from_tavole"))}</h2>`+th+`<h2 class="sec">${esc(t("in_texts"))}</h2>`}
   h+=th;for(const c of L2)h+=hitHtml(c.d,c.i,true);v.innerHTML=h+"</div>";return}
  else{S.terms=parse(S.q);for(const d of dd){const hits=[];d.b.forEach((b,i)=>{if(b.t==="rh")return;const z=Z(b);if(S.terms.every(t=>z.indexOf(t)>=0))hits.push(i)});if(hits.length)res.push({d,hits})}}
  S.res=res;
@@ -496,33 +495,48 @@ function drawPeek(){const {d,i}=PK[PK.length-1];const p=$("#peek");const list=ar
  $("#cpy").onclick=e=>{const ct=`${d.title}, ${b.t==="n"?t("note_word")+" "+b.n:b.s?b.s:unit(d.num)+" "+b.n}`;try{navigator.clipboard.writeText(ct)}catch(x){}e.target.textContent=t("peek_copied");setTimeout(()=>e.target.textContent=t("peek_copy"),1200)}}
 function closePeek(silent){PK.length=0;$("#peek").classList.remove("on");document.body.classList.remove("pk");if(!$("#drawer").classList.contains("on"))$("#shade").className=""}
 /* ---------- tavole: chi decide */
-let TAV=null;
-function tavole(){if(TAV)return TAV;TAV=[];const d=byId["it-15"];if(!d)return TAV;let tav=null,grp=null;
- d.b.forEach((b,i)=>{if(b.t==="h"){const m=b.x.match(/^Tavola ([A-F]) · (.*)/);if(m){tav={code:m[1],title:m[2],groups:[],intro:[]};TAV.push(tav);grp=null;return}
+const TAVCFG={
+ it:{word:"Tavola",tiRe:/^(Atto|Che cosa)$/i,artRe:/^(?:Il|La|Lo|I|Gli|L[’']|Le)\s*/,stopRe:/^(.*?)(?:,|:| decide| propone|$)/,sgen:"Superiore Generale",sgenFull:"Il Superiore Generale",bshs:"Vescovo e Santa Sede",
+     consenso:/consenso/i,collegial:/collegialmente/i,parere:/parere/i,propone:/propone/i,dasolo:/da solo/i,doveri:/doveri/i,
+     m_c:"col consenso del Consiglio",m_s:"collegialmente col Consiglio",m_p:"col parere del Consiglio",m_solo:"da solo",m_prop:"propone · istruisce · dà il parere",m_dov:"doveri e termini"},
+ pt:{word:"Quadro",tiRe:/^(Ato|O quê)$/i,artRe:/^(?:O|A|Os|As)\s*/,stopRe:/^(.*?)(?:,|:| decide| propõe|$)/,sgen:"Superior Geral",sgenFull:"O Superior Geral",bshs:"Bispo e Santa Sé",
+     consenso:/consentimento/i,collegial:/colegialmente/i,parere:/parecer/i,propone:/propõe/i,dasolo:/sozinho/i,doveri:/deveres/i,
+     m_c:"com o consentimento do Conselho",m_s:"colegialmente com o Conselho",m_p:"com o parecer do Conselho",m_solo:"sozinho",m_prop:"propõe · instrui · dá o parecer",m_dov:"deveres e prazos"},
+ es:{word:"Cuadro",tiRe:/^(Acto|Qué)$/i,artRe:/^(?:El|La|Los|Las)\s*/,stopRe:/^(.*?)(?:,|:| decide| propone|$)/,sgen:"Superior General",sgenFull:"El Superior General",bshs:"Obispo y Santa Sede",
+     consenso:/consentimiento/i,collegial:/colegiadamente/i,parere:/parecer/i,propone:/propone/i,dasolo:/\bsolo\b/i,doveri:/deberes/i,
+     m_c:"con el consentimiento del Consejo",m_s:"colegiadamente con el Consejo",m_p:"con el parecer del Consejo",m_solo:"solo",m_prop:"propone · instruye · da el parecer",m_dov:"deberes y plazos"},
+ en:{word:"Table",tiRe:/^(Act|What)$/i,artRe:/^(?:The)\s*/,stopRe:/^(.*?)(?:,|:| decides| proposes|$)/,sgen:"Superior General",sgenFull:"The Superior General",bshs:"Bishop and Holy See",
+     consenso:/consent/i,collegial:/collegially/i,parere:/opinion/i,propone:/proposes/i,dasolo:/\balone\b/i,doveri:/duties/i,
+     m_c:"with the consent of the Council",m_s:"collegially with the Council",m_p:"with the opinion of the Council",m_solo:"alone",m_prop:"proposes · prepares the case · gives the opinion",m_dov:"duties and time limits"}
+};
+const TAVCACHE={};
+function tavole(lang){lang=lang||"it";if(TAVCACHE[lang])return TAVCACHE[lang];const cfg=TAVCFG[lang]||TAVCFG.it;const out=[];TAVCACHE[lang]=out;const d=byId[lang+"-15"];if(!d)return out;let tav=null,grp=null;
+ const headRe=new RegExp("^"+cfg.word+" ([A-F]) · (.*)");
+ d.b.forEach((b,i)=>{if(b.t==="h"){const m=b.x.match(headRe);if(m){tav={code:m[1],title:m[2],groups:[],intro:[]};out.push(tav);grp=null;return}
    const g=b.x.match(/^([A-F])\.(\d+) · (.*)/);if(g&&tav){grp={code:g[1]+"."+g[2],title:g[3],note:[],head:null,rows:[],tav};tav.groups.push(grp);return}
    if(tav&&b.l<=2){tav=null;grp=null}return}
   if(!tav||b.t==="n")return;
   if(b.t==="rh"){if(!grp||grp.head){grp={code:tav.code,title:tav.title,note:tav.intro.slice(),head:null,rows:[],tav};tav.groups.push(grp)}grp.head=b.x.split(" ‖ ");return}
   if(b.t==="r"){if(grp)grp.rows.push(i);return}
   if(b.t==="p"){if(grp&&!grp.head)grp.note.push(b.x);else if(!grp)tav.intro.push(b.x)}});
- for(const t of TAV)for(const g of t.groups){let who=t.code==="A"?"Superiore Generale":t.code==="D"?"Vescovo e Santa Sede":(g.title.match(/^(.*?)(?:,|:| decide| propone|$)/)||["",g.title])[1].replace(/^(?:Il|La|Lo|I|Gli|L[’'])\s*/,"");g.who=who.charAt(0).toUpperCase()+who.slice(1);
-  const T=g.title;g.mode=/consenso/i.test(T)?["c","col consenso del Consiglio"]:/collegialmente/i.test(T)?["s","collegialmente col Consiglio"]:/parere/i.test(T)&&!/propone/i.test(T)?["p","col parere del Consiglio"]:/da solo/i.test(T)?["","da solo"]:/propone/i.test(T)?["","propone · istruisce · dà il parere"]:/doveri/i.test(T)?["","doveri e termini"]:null}
- return TAV}
+ for(const tv of out)for(const g of tv.groups){let who=tv.code==="A"?cfg.sgen:tv.code==="D"?cfg.bshs:(g.title.match(cfg.stopRe)||["",g.title])[1].replace(cfg.artRe,"");g.who=who.charAt(0).toUpperCase()+who.slice(1);
+  const GT=g.title;g.mode=cfg.consenso.test(GT)?["c",cfg.m_c]:cfg.collegial.test(GT)?["s",cfg.m_s]:cfg.parere.test(GT)&&!cfg.propone.test(GT)?["p",cfg.m_p]:cfg.dasolo.test(GT)?["",cfg.m_solo]:cfg.propone.test(GT)?["",cfg.m_prop]:cfg.doveri.test(GT)?["",cfg.m_dov]:null}
+ return out}
 const TABS={get chi(){return [t("tile1_t"),"ABCD",t("tab_chi_d")]},get chiedo(){return [t("tile2_t"),"E",""]},get scad(){return [t("tile3_t"),"F",""]}};
-function renderTav(s){const v=$("#view");const d=byId["it-15"];const T=tavole();const tab=TABS[s.tab]||TABS.chi;const tavs=T.filter(t=>tab[1].includes(t.code));
- const groups=tavs.flatMap(t=>t.groups);const whos=[...new Set(groups.map(g=>g.who))];const f=nz(s.f||"").trim().split(/\s+/).filter(Boolean);
- let h=`<div class="wrap"><div class="tabs">${Object.entries(TABS).map(([k,t])=>`<button class="${k===(s.tab||"chi")?"on":""}" data-tab="${k}">${t[0]}</button>`).join("")}</div>`;
+function renderTav(s){const v=$("#view");const d=byId[S.lang+"-15"];const cfg=TAVCFG[S.lang]||TAVCFG.it;const T=tavole(S.lang);const tab=TABS[s.tab]||TABS.chi;const tavs=T.filter(tv=>tab[1].includes(tv.code));
+ const groups=tavs.flatMap(tv=>tv.groups);const whos=[...new Set(groups.map(g=>g.who))];const f=nz(s.f||"").trim().split(/\s+/).filter(Boolean);
+ let h=`<div class="wrap"><div class="tabs">${Object.entries(TABS).map(([k,tb])=>`<button class="${k===(s.tab||"chi")?"on":""}" data-tab="${k}">${tb[0]}</button>`).join("")}</div>`;
  if(!d||!T.length){v.innerHTML=h+`<div class="empty">${esc(t("tav_unavailable"))}</div></div>`;return}
  h+=`<input class="filter" id="tf" type="search" placeholder="${esc(t("tav_filter_ph"))}" value="${esc(s.f||"")}">`;
  if(whos.length>1)h+=`<div class="chips"><button class="${!s.who?"on":""}" data-who="">${esc(t("tav_all"))}</button>${whos.map(w=>`<button class="${s.who===w?"on":""}" data-who="${esc(w)}">${esc(w)}</button>`).join("")}</div>`;
- h+=`<div id="tlist"></div><p class="summary" style="margin-top:18px">${esc(t("tav_source").split("{0}").join(tab[1].split("").join(", ")))} ${S.lang!=="it"?esc(t("tav_only_it")):""}</p></div>`;
+ h+=`<div id="tlist"></div><p class="summary" style="margin-top:18px">${esc(t("tav_source").split("{0}").join(tab[1].split("").join(", ")))}</p></div>`;
  v.innerHTML=h;v.scrollTop=0;
  const ua=t("unit_art").charAt(0).toUpperCase()+t("unit_art").slice(1);const tnone=t("tav_none");
  const draw=()=>{const ff=nz($("#tf").value).trim().split(/\s+/).filter(Boolean);let o="",tot=0;
   if(!ff.length&&!s.who&&tab[2])o+=`<p class="summary">${tab[2]}</p>`;
   for(const tv of tavs){for(const g of tv.groups){if(s.who&&g.who!==s.who)continue;const rows=g.rows.filter(i=>{const z=Z(d.b[i]);return ff.every(w=>z.includes(w))});if(!rows.length)continue;tot+=rows.length;
-    o+=`<div class="gt">${esc(tv.groups.length>1||tv.code<"D"?(tv.code==="A"?"Il Superiore Generale · ":"")+g.title:tv.title)}</div>`;if(g.note.length&&!ff.length)o+=`<div class="gn">${esc(g.note.join(" "))}</div>`;
-    const hd=g.head||[];let ti=hd.findIndex(x=>/^(Atto|Che cosa)$/i.test(x));if(ti<0)ti=0;
+    o+=`<div class="gt">${esc(tv.groups.length>1||tv.code<"D"?(tv.code==="A"?cfg.sgenFull+" · ":"")+g.title:tv.title)}</div>`;if(g.note.length&&!ff.length)o+=`<div class="gn">${esc(g.note.join(" "))}</div>`;
+    const hd=g.head||[];let ti=hd.findIndex(x=>cfg.tiRe.test(x));if(ti<0)ti=0;
     for(const i of rows){const cs=cells(d.b[i].x);o+=`<div class="row"><div class="a">${richRange(d,i,cs[ti][0],cs[ti][1],null)}</div>`;
      cs.forEach((c,k)=>{if(k===ti||k===cs.length-1)return;o+=`<div class="f"><i>${esc(hd[k]||"")}</i>${richRange(d,i,c[0],c[1],null)}</div>`});
      const last=cs[cs.length-1];o+=`<div class="m">${g.mode&&tab[1]==="ABCD"?`<span class="mode ${g.mode[0]}">${esc(g.who)} · ${g.mode[1]}</span>`:""}<span class="lk">${esc(ua)} ${richRange(d,i,last[0],last[1],null)}</span></div></div>`}}}
