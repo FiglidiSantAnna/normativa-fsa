@@ -171,12 +171,161 @@ footer{flex:none;display:none}
 <script>
 const BUILD="14 novembre 2026";
 const LANGS={it:"Italiano",pt:"Português",es:"Español",en:"English"};
+const LANGFULL={it:"italiano",pt:"portoghese",es:"spagnolo",en:"inglese"};
+const UI={
+ it:{home_title:"Inizio",lang_title:"Lingua dei testi",search_ph:"Cerca o fai una domanda…",
+  hero_h1:"La nostra normativa",hero_p:"Tutti i libri dell’Istituto Figli di Sant’Anna, a partire dalle Costituzioni.",
+  bigsearch_ph:"Scrivi una domanda o un argomento",search_btn:"Cerca",hint_label:"Prova:",
+  tile1_t:"Chi decide?",tile1_d:"Ogni atto di governo: chi lo compie, con quale consenso o parere.",
+  tile2_t:"Che cosa chiedo, e a chi?",tile2_d:"Per ogni fratello: permessi, richieste e come presentarle.",
+  tile3_t:"Scadenze",tile3_d:"Relazioni, rendiconti e adempimenti lungo l’anno.",
+  tile4_t:"Le Costituzioni",tile4_d:"Il fondamento: tutti gli altri libri le applicano.",
+  notice_tavole_only_it:"La tavola «Chi decide?» è disponibile per ora solo in italiano.",
+  group_fondamento:"Il fondamento",group_dirform:"Direttorio e formazione",group_governo:"Governo e amministrazione",
+  group_minist:"Ministeri, separazione, tutela",group_preghiera:"Preghiera e vita quotidiana",group_altri:"Altri testi",
+  legend_approved:"Testo approvato: solo il Capitolo Generale può modificarlo.",
+  legend_revised:"Testo rivisto nell’ottobre 2026, da rivedere dopo il II Capitolo Generale.",
+  legend_collected:"Testi raccolti il {0}. Tocca un rinvio sottolineato (es. Cost., n. 21) per leggerlo senza perdere il segno.",
+  status_approved:"Approvate · 8 dicembre 2025",status_revised:"Testo rivisto · da rivedere dopo il Capitolo",
+  status_tr_const:"Traduzione delle Costituzioni approvate",status_tr_rev:"Traduzione aggiornata al testo del 15 novembre 2026",
+  seg_topic:"Per argomento",seg_words:"Parole esatte",
+  empty_q_title:"Nessun passo pertinente per «{0}»",empty_q_hint:"Prova con altre parole (anche una sola, es. obbedienza).",
+  ans_title:"Risposta alla domanda",ans_btn:"✨ Rispondi con Claude",ans_sm:"Claude cerca nei testi e risponde citando gli articoli",
+  summary_q:"I passi che riguardano «{0}», in ordine di pertinenza. Sono mostrati solo i passi che contengono la parola più specifica della domanda.",
+  from_tavole:"Dalle tavole «Chi decide?»",in_texts:"Nei testi",
+  empty_w_title:"Nessun risultato per «{0}»",empty_w_hint:"Prova con meno parole o passa a «Per argomento».",
+  word_result_1:"risultato",word_result_n:"risultati",word_book_1:"libro",word_book_n:"libri",
+  more_open:"… altri {0}: apri il libro",
+  note_word:"nota",unit_art:"art.",unit_n:"n.",
+  toc_title:"Indice — {0}",toc_notes:"Note",toc_empty:"Questo libro non ha titoli di sezione.",
+  doc_index_btn:"Indice",doc_notes_h:"Note",
+  doc_red_notice:"In questa app il testo è riportato per intero senza colori: le parti che nel file Word sono in rosso qui non si distinguono.",
+  peek_based_on:"Si fonda su · rinvia a",peek_cited_by:"Citato da · sviluppato in ({0})",
+  peek_open_book:"Apri nel libro",peek_copy:"Copia la citazione",peek_copied:"Copiata",
+  tav_unavailable:"Tavole non disponibili.",tav_filter_ph:"Cerca: es. noviziato, viaggio, alienazione…",tav_all:"Tutti",
+  tav_source:"Fonte: «Il servizio dell’autorità», Parte terza, Tavole {0}.",tav_only_it:"Disponibile per ora solo in italiano.",
+  tav_none:"Nessuna voce trovata.",
+  tab_chi_d:"Scegli chi compie l’atto, oppure scrivi che cosa cerchi. Ogni riga rimanda all’articolo de «Il servizio dell’autorità», che cita Costituzioni e Direttorio.",
+  ask_searching:"Claude sta cercando nei testi…",ask_verify:"Verifica sempre sul testo: tocca i riferimenti [..] per aprire l’articolo.",
+  ask_rate:"Troppe richieste: riprova fra un minuto.",ask_fail:"Non sono riuscito a rispondere ({0}).",ask_retry:"Riprova",
+  hints:[["chi ammette al noviziato","chi ammette al noviziato"],["Cost. 21","Cost. 21"],["Dir. 75","Dir. 75"],["tempo di distensione","tempo di distensione"]]},
+ pt:{home_title:"Início",lang_title:"Idioma dos textos",search_ph:"Pesquisa ou faz uma pergunta…",
+  hero_h1:"A nossa normativa",hero_p:"Todos os livros do Instituto Filhos de Sant’Ana, a partir das Constituições.",
+  bigsearch_ph:"Escreve uma pergunta ou um tema",search_btn:"Pesquisar",hint_label:"Experimenta:",
+  tile1_t:"Quem decide?",tile1_d:"Cada ato de governo: quem o realiza, com que consentimento ou parecer.",
+  tile2_t:"O que peço, e a quem?",tile2_d:"Para cada irmão: permissões, pedidos e como apresentá-los.",
+  tile3_t:"Prazos",tile3_d:"Relatórios, prestações de contas e obrigações ao longo do ano.",
+  tile4_t:"As Constituições",tile4_d:"O fundamento: todos os outros livros as aplicam.",
+  notice_tavole_only_it:"A tabela «Quem decide?» está disponível por agora só em italiano.",
+  group_fondamento:"O fundamento",group_dirform:"Diretório e formação",group_governo:"Governo e administração",
+  group_minist:"Ministérios, separação, proteção",group_preghiera:"Oração e vida quotidiana",group_altri:"Outros textos",
+  legend_approved:"Texto aprovado: só o Capítulo Geral pode modificá-lo.",
+  legend_revised:"Texto revisto em outubro de 2026, a rever depois do II Capítulo Geral.",
+  legend_collected:"Textos reunidos em {0}. Toca numa remissão sublinhada (ex. Const., n. 21) para a ler sem perder o lugar.",
+  status_approved:"Aprovadas · 8 de dezembro de 2025",status_revised:"Texto revisto · a rever depois do Capítulo",
+  status_tr_const:"Tradução das Constituições aprovadas",status_tr_rev:"Tradução atualizada ao texto de 15 de novembro de 2026",
+  seg_topic:"Por tema",seg_words:"Palavras exatas",
+  empty_q_title:"Nenhuma passagem pertinente para «{0}»",empty_q_hint:"Tenta com outras palavras (mesmo uma só, p. ex. obediência).",
+  ans_title:"Resposta à pergunta",ans_btn:"✨ Responde com Claude",ans_sm:"Claude procura nos textos e responde citando os artigos",
+  summary_q:"As passagens relativas a «{0}», por ordem de pertinência. São mostradas só as passagens que contêm a palavra mais específica da pergunta.",
+  from_tavole:"Das tabelas «Quem decide?»",in_texts:"Nos textos",
+  empty_w_title:"Nenhum resultado para «{0}»",empty_w_hint:"Tenta com menos palavras ou passa a «Por tema».",
+  word_result_1:"resultado",word_result_n:"resultados",word_book_1:"livro",word_book_n:"livros",
+  more_open:"… outros {0}: abre o livro",
+  note_word:"nota",unit_art:"art.",unit_n:"n.",
+  toc_title:"Índice — {0}",toc_notes:"Notas",toc_empty:"Este livro não tem títulos de secção.",
+  doc_index_btn:"Índice",doc_notes_h:"Notas",
+  doc_red_notice:"Nesta aplicação o texto é apresentado na íntegra sem cores: as partes que no ficheiro Word estão em vermelho aqui não se distinguem.",
+  peek_based_on:"Baseia-se em · remete para",peek_cited_by:"Citado por · desenvolvido em ({0})",
+  peek_open_book:"Abrir no livro",peek_copy:"Copiar a citação",peek_copied:"Copiada",
+  tav_unavailable:"Tabelas não disponíveis.",tav_filter_ph:"Pesquisa: p. ex. noviciado, viagem, alienação…",tav_all:"Todos",
+  tav_source:"Fonte: «O serviço da autoridade», Parte terceira, Tabelas {0}.",tav_only_it:"Disponível por agora só em italiano.",
+  tav_none:"Nenhuma entrada encontrada.",
+  tab_chi_d:"Escolhe quem realiza o ato, ou escreve o que procuras. Cada linha remete para o artigo de «O serviço da autoridade», que cita as Constituições e o Diretório.",
+  ask_searching:"Claude está a procurar nos textos…",ask_verify:"Verifica sempre no texto: toca nas referências [..] para abrir o artigo.",
+  ask_rate:"Demasiados pedidos: tenta de novo dentro de um minuto.",ask_fail:"Não consegui responder ({0}).",ask_retry:"Tenta de novo",
+  hints:[["quem admite ao noviciado","quem admite ao noviciado"],["obediência","obediência"],["viagens e descanso","viagens e descanso"],["Const. 21","Const. 21"]]},
+ es:{home_title:"Inicio",lang_title:"Idioma de los textos",search_ph:"Busca o haz una pregunta…",
+  hero_h1:"Nuestra normativa",hero_p:"Todos los libros del Instituto Hijos de Santa Ana, a partir de las Constituciones.",
+  bigsearch_ph:"Escribe una pregunta o un tema",search_btn:"Buscar",hint_label:"Prueba:",
+  tile1_t:"¿Quién decide?",tile1_d:"Cada acto de gobierno: quién lo realiza, con qué consentimiento o parecer.",
+  tile2_t:"¿Qué pido, y a quién?",tile2_d:"Para cada hermano: permisos, solicitudes y cómo presentarlas.",
+  tile3_t:"Plazos",tile3_d:"Informes, rendiciones de cuentas y obligaciones a lo largo del año.",
+  tile4_t:"Las Constituciones",tile4_d:"El fundamento: todos los demás libros las aplican.",
+  notice_tavole_only_it:"La tabla «¿Quién decide?» está disponible por ahora solo en italiano.",
+  group_fondamento:"El fundamento",group_dirform:"Directorio y formación",group_governo:"Gobierno y administración",
+  group_minist:"Ministerios, separación, protección",group_preghiera:"Oración y vida cotidiana",group_altri:"Otros textos",
+  legend_approved:"Texto aprobado: solo el Capítulo General puede modificarlo.",
+  legend_revised:"Texto revisado en octubre de 2026, por revisar después del II Capítulo General.",
+  legend_collected:"Textos reunidos el {0}. Toca una remisión subrayada (p. ej. Const., n. 21) para leerla sin perder el lugar.",
+  status_approved:"Aprobadas · 8 de diciembre de 2025",status_revised:"Texto revisado · por revisar después del Capítulo",
+  status_tr_const:"Traducción de las Constituciones aprobadas",status_tr_rev:"Traducción actualizada al texto del 15 de noviembre de 2026",
+  seg_topic:"Por tema",seg_words:"Palabras exactas",
+  empty_q_title:"Ningún pasaje pertinente para «{0}»",empty_q_hint:"Prueba con otras palabras (aunque sea una sola, p. ej. obediencia).",
+  ans_title:"Respuesta a la pregunta",ans_btn:"✨ Responde con Claude",ans_sm:"Claude busca en los textos y responde citando los artículos",
+  summary_q:"Los pasajes relativos a «{0}», por orden de pertinencia. Se muestran solo los pasajes que contienen la palabra más específica de la pregunta.",
+  from_tavole:"De las tablas «¿Quién decide?»",in_texts:"En los textos",
+  empty_w_title:"Ningún resultado para «{0}»",empty_w_hint:"Prueba con menos palabras o pasa a «Por tema».",
+  word_result_1:"resultado",word_result_n:"resultados",word_book_1:"libro",word_book_n:"libros",
+  more_open:"… otros {0}: abre el libro",
+  note_word:"nota",unit_art:"art.",unit_n:"n.",
+  toc_title:"Índice — {0}",toc_notes:"Notas",toc_empty:"Este libro no tiene títulos de sección.",
+  doc_index_btn:"Índice",doc_notes_h:"Notas",
+  doc_red_notice:"En esta aplicación el texto se presenta íntegro sin colores: las partes que en el archivo Word están en rojo aquí no se distinguen.",
+  peek_based_on:"Se basa en · remite a",peek_cited_by:"Citado por · desarrollado en ({0})",
+  peek_open_book:"Abrir en el libro",peek_copy:"Copiar la cita",peek_copied:"Copiada",
+  tav_unavailable:"Tablas no disponibles.",tav_filter_ph:"Busca: p. ej. noviciado, viaje, enajenación…",tav_all:"Todos",
+  tav_source:"Fuente: «El servicio de la autoridad», Parte tercera, Tablas {0}.",tav_only_it:"Disponible por ahora solo en italiano.",
+  tav_none:"Ninguna entrada encontrada.",
+  tab_chi_d:"Elige quién realiza el acto, o escribe lo que buscas. Cada fila remite al artículo de «El servicio de la autoridad», que cita las Constituciones y el Directorio.",
+  ask_searching:"Claude está buscando en los textos…",ask_verify:"Verifica siempre en el texto: toca las referencias [..] para abrir el artículo.",
+  ask_rate:"Demasiadas solicitudes: inténtalo de nuevo en un minuto.",ask_fail:"No he podido responder ({0}).",ask_retry:"Reintentar",
+  hints:[["quién admite al noviciado","quién admite al noviciado"],["obediencia","obediencia"],["viajes y descanso","viajes y descanso"],["Const. 21","Const. 21"]]},
+ en:{home_title:"Home",lang_title:"Language of the texts",search_ph:"Search or ask a question…",
+  hero_h1:"Our regulations",hero_p:"All the books of the Institute of the Sons of Saint Anne, starting from the Constitutions.",
+  bigsearch_ph:"Write a question or a topic",search_btn:"Search",hint_label:"Try:",
+  tile1_t:"Who decides?",tile1_d:"Every act of governance: who performs it, with what consent or opinion.",
+  tile2_t:"What do I ask, and to whom?",tile2_d:"For every brother: permissions, requests, and how to submit them.",
+  tile3_t:"Deadlines",tile3_d:"Reports, accounts and obligations throughout the year.",
+  tile4_t:"The Constitutions",tile4_d:"The foundation: every other book applies them.",
+  notice_tavole_only_it:"The “Who decides?” table is available for now only in Italian.",
+  group_fondamento:"The foundation",group_dirform:"Directory and formation",group_governo:"Governance and administration",
+  group_minist:"Ministries, separation, protection",group_preghiera:"Prayer and daily life",group_altri:"Other texts",
+  legend_approved:"Approved text: only the General Chapter can amend it.",
+  legend_revised:"Text revised in October 2026, to be reviewed after the Second General Chapter.",
+  legend_collected:"Texts collected on {0}. Tap an underlined cross-reference (e.g. Const., no. 21) to read it without losing your place.",
+  status_approved:"Approved · 8 December 2025",status_revised:"Text revised · to be reviewed after the Chapter",
+  status_tr_const:"Translation of the approved Constitutions",status_tr_rev:"Translation updated to the text of 15 November 2026",
+  seg_topic:"By topic",seg_words:"Exact words",
+  empty_q_title:"No relevant passage for “{0}”",empty_q_hint:"Try other words (even a single one, e.g. obedience).",
+  ans_title:"Answer to the question",ans_btn:"✨ Answer with Claude",ans_sm:"Claude searches the texts and answers citing the articles",
+  summary_q:"The passages concerning “{0}”, in order of relevance. Only passages containing the most specific word of the question are shown.",
+  from_tavole:"From the “Who decides?” tables",in_texts:"In the texts",
+  empty_w_title:"No results for “{0}”",empty_w_hint:"Try fewer words or switch to “By topic”.",
+  word_result_1:"result",word_result_n:"results",word_book_1:"book",word_book_n:"books",
+  more_open:"… {0} more: open the book",
+  note_word:"note",unit_art:"art.",unit_n:"no.",
+  toc_title:"Table of contents — {0}",toc_notes:"Notes",toc_empty:"This book has no section headings.",
+  doc_index_btn:"Contents",doc_notes_h:"Notes",
+  doc_red_notice:"In this app the text is shown in full without colour: the parts that are in red in the Word file cannot be distinguished here.",
+  peek_based_on:"Based on · refers to",peek_cited_by:"Cited by · developed in ({0})",
+  peek_open_book:"Open in the book",peek_copy:"Copy the citation",peek_copied:"Copied",
+  tav_unavailable:"Tables not available.",tav_filter_ph:"Search: e.g. novitiate, travel, alienation…",tav_all:"All",
+  tav_source:"Source: “The service of authority”, Part Three, Tables {0}.",tav_only_it:"Available for now only in Italian.",
+  tav_none:"No entries found.",
+  tab_chi_d:"Choose who performs the act, or type what you are looking for. Each row refers to the article of “The service of authority”, which cites the Constitutions and the Directory.",
+  ask_searching:"Claude is searching the texts…",ask_verify:"Always check the text: tap the references [..] to open the article.",
+  ask_rate:"Too many requests: try again in a minute.",ask_fail:"I could not answer ({0}).",ask_retry:"Retry",
+  hints:[["who admits to the novitiate","who admits to the novitiate"],["obedience","obedience"],["travel and rest","travel and rest"],["Const. 21","Const. 21"]]}
+};
+function t(k){let s=(UI[S.lang]&&UI[S.lang][k]!=null)?UI[S.lang][k]:UI.it[k];if(s==null)return k;for(let i=1;i<arguments.length;i++)s=s.split("{"+(i-1)+"}").join(arguments[i]);return s}
+function applyChrome(){document.documentElement.lang=S.lang;$("#q").placeholder=t("search_ph");const b=document.querySelector("header .brand");if(b)b.title=t("home_title");const ls=$("#langsel");if(ls)ls.title=t("lang_title")}
 const SIG={"01":"Cost.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capitolo","06":"RSFSA","06a":"Formulari","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministeri","10":"NORFSA","10a":"Codice di condotta","10b":"Allegati NORFSA","12":"RITFSA","13":"Vademecum","13c":"Vademecum stranieri","14":"Devozionario","15":"Servizio dell’autorità","16":"Reg. convenzioni","17":"Cammino"};
 const UNITN={"01":1,"10":1,"17":1,"03":1};
 /* Stato di ogni libro: per cambiarlo basta modificare questa tabella. */
-const STATUS={"01":["ok","Approvate · 8 dicembre 2025"]};
-const STDEF=["rev","Testo rivisto · da rivedere dopo il Capitolo"];
-const GROUPS=[["Il fondamento",["01"]],["Direttorio e formazione",["02","03","17"]],["Governo e amministrazione",["15","04","05","07","08","16"]],["Ministeri, separazione, tutela",["09","06","06a","10","10a","10b"]],["Preghiera e vita quotidiana",["12","13","13c","14"]]];
+const STATUS={"01":["ok","status_approved"]};
+const STDEF=["rev","status_revised"];
+const GROUPS=[["group_fondamento",["01"]],["group_dirform",["02","03","17"]],["group_governo",["15","04","05","07","08","16"]],["group_minist",["09","06","06a","10","10a","10b"]],["group_preghiera",["12","13","13c","14"]]];
 const norm1=new Map();
 function nc(c){let r=norm1.get(c);if(r===undefined){r=c.normalize("NFD")[0]||c;r=r.toLowerCase();if(r.length!==1)r=c;if(r==="’"||r==="‘"||r==="`"||r==="´")r="'";if(r==="“"||r==="”"||r==="«"||r==="»")r='"';if(r==="–"||r==="—")r="-";norm1.set(c,r)}return r}
 function nz(s){let o="";for(let i=0;i<s.length;i++)o+=nc(s[i]);return o}
@@ -186,8 +335,8 @@ const byId=Object.fromEntries(docs.map(d=>[d.id,d]));
 const $=s=>document.querySelector(s);
 const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 let S={lang:"it",q:"",mode:"q",stem:false,terms:[],art:null,qres:null,res:null,cnt:{},marks:[],cur:-1,doc:null};
-const stOf=d=>d.lang!=="it"?(d.num==="01"?["ok","Traduzione delle Costituzioni approvate"]:["rev","Traduzione · da aggiornare al testo rivisto"]):(STATUS[d.num]||STDEF);
-const stHtml=d=>{const s=stOf(d);return `<span class="st ${s[0]}"><i></i>${esc(s[1])}</span>`};
+const stOf=d=>d.lang!=="it"?(d.num==="01"?["ok","status_tr_const"]:["rev","status_tr_rev"]):(STATUS[d.num]||STDEF);
+const stHtml=d=>{const s=stOf(d);return `<span class="st ${s[0]}"><i></i>${esc(t(s[1]))}</span>`};
 function scope(){return docs.filter(d=>d.lang===S.lang)}
 /* ---------- indici */
 function idx(d){if(d.ix)return d.ix;const art=new Map(),sec=new Map(),note=new Map(),own=new Array(d.b.length).fill(-1);let cur=-1;const ROM={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10};
@@ -197,8 +346,8 @@ function idx(d){if(d.ix)return d.ix;const art=new Map(),sec=new Map(),note=new M
   own[i]=b.t==="n"?-1:cur});
  for(const bi in d.R)for(const r of d.R[bi])if(r[3]===""){const ni=note.get(r[4]);if(ni!=null)own[ni]=own[bi]>=0?own[bi]:-1}
  return d.ix={art,sec,note,own}}
-function unit(num){return UNITN[num]?"n.":"art."}
-function labelOf(d,i){const b=d.b[i];if(b.t==="n")return `${SIG[d.num]||d.title}, nota ${b.n}`;if(b.s)return `${SIG[d.num]}, ${b.s}`;if(b.n)return `${SIG[d.num]||d.title}, ${unit(d.num)} ${b.n}`;return `${SIG[d.num]||d.title}${b.h?" · "+b.h:""}`}
+function unit(num){return UNITN[num]?t("unit_n"):t("unit_art")}
+function labelOf(d,i){const b=d.b[i];if(b.t==="n")return `${SIG[d.num]||d.title}, ${t("note_word")} ${b.n}`;if(b.s)return `${SIG[d.num]}, ${b.s}`;if(b.n)return `${SIG[d.num]||d.title}, ${unit(d.num)} ${b.n}`;return `${SIG[d.num]||d.title}${b.h?" · "+b.h:""}`}
 function target(t,k){const d=byId["it-"+t];if(!d)return null;const ix=idx(d);k=String(k);let i=(t==="03"||k.includes("."))?ix.sec.get(k):ix.art.get(+k);return i==null?null:{d,i}}
 let REV=null;
 function rev(){if(REV)return REV;REV=new Map();for(const d of docs){if(!d.hasR)continue;const ix=idx(d);for(const bi in d.R)for(const r of d.R[bi]){if(r[3]==="")continue;const a=r[4],b2=r[5];const keys=(typeof a==="number"&&typeof b2==="number")?Array.from({length:b2-a+1},(_,j)=>a+j):[a];let o=ix.own[bi];for(const k of keys){const key=r[3]+"|"+k;let L=REV.get(key);if(!L)REV.set(key,L=[]);L.push({d,bi:+bi,o})}}}return REV}
@@ -254,27 +403,28 @@ const NAV=[];let CURV={v:"home"};
 function go(st,replace){if(!replace)NAV.push(CURV);CURV=st;try{history.pushState(st,"")}catch(e){}closePeek(true);closeDrawer();render()}
 function back(){if(PK.length){closePeek();return}if($("#drawer").classList.contains("on")){closeDrawer();return}CURV=NAV.pop()||{v:"home"};render()}
 window.addEventListener("popstate",()=>back());
-function render(){const s=CURV;$("#hsearch").style.visibility=s.v==="home"?"hidden":"visible";
+function render(){applyChrome();const s=CURV;$("#hsearch").style.visibility=s.v==="home"?"hidden":"visible";
  if(s.v==="home")renderHome();else if(s.v==="res")renderSearch(s);else if(s.v==="doc")renderDoc(byId[s.id],s.blk,s.hl);else if(s.v==="tav")renderTav(s)}
 /* ---------- home */
 function bookRow(d,n){return `<div class="bk" data-open="${d.id}"><span class="n">${d.num}</span><span class="t"><b>${esc(d.title)}</b>${stHtml(d)}</span>${n?`<span class="c">${n}</span>`:""}</div>`}
 function bookList(cnt){const sc=scope(),m=Object.fromEntries(sc.map(d=>[d.num,d]));let h="";const used=new Set();
- for(const [g,nums] of GROUPS){const ds=nums.map(n=>m[n]).filter(Boolean);if(!ds.length)continue;ds.forEach(d=>used.add(d.id));h+=`<h2 class="sec">${g}</h2><div class="books">${ds.map(d=>bookRow(d,cnt&&cnt[d.id])).join("")}</div>`}
- const rest=sc.filter(d=>!used.has(d.id));if(rest.length)h+=`<h2 class="sec">Altri testi</h2><div class="books">${rest.map(d=>bookRow(d,cnt&&cnt[d.id])).join("")}</div>`;return h}
+ for(const [g,nums] of GROUPS){const ds=nums.map(n=>m[n]).filter(Boolean);if(!ds.length)continue;ds.forEach(d=>used.add(d.id));h+=`<h2 class="sec">${esc(t(g))}</h2><div class="books">${ds.map(d=>bookRow(d,cnt&&cnt[d.id])).join("")}</div>`}
+ const rest=sc.filter(d=>!used.has(d.id));if(rest.length)h+=`<h2 class="sec">${esc(t("group_altri"))}</h2><div class="books">${rest.map(d=>bookRow(d,cnt&&cnt[d.id])).join("")}</div>`;return h}
 function renderHome(){const v=$("#view");v.scrollTop=0;
- v.innerHTML=`<div class="hero"><div class="in"><h1>La nostra normativa</h1><p>Tutti i libri dell’Istituto Figli di Sant’Anna, a partire dalle Costituzioni.</p>
- <div class="bigsearch"><input id="bq" type="search" enterkeyhint="search" placeholder="Scrivi una domanda o un argomento"><button id="bgo">Cerca</button></div>
- <div class="hint">Prova: <a data-q="chi ammette al noviziato">chi ammette al noviziato</a><a data-q="Cost. 21">Cost. 21</a><a data-q="Dir. 75">Dir. 75</a><a data-q="tempo di distensione">tempo di distensione</a></div></div></div>
+ const hints=(UI[S.lang]&&UI[S.lang].hints)||UI.it.hints;
+ v.innerHTML=`<div class="hero"><div class="in"><h1>${esc(t("hero_h1"))}</h1><p>${esc(t("hero_p"))}</p>
+ <div class="bigsearch"><input id="bq" type="search" enterkeyhint="search" placeholder="${esc(t("bigsearch_ph"))}"><button id="bgo">${esc(t("search_btn"))}</button></div>
+ <div class="hint">${esc(t("hint_label"))} ${hints.map(([lbl,q])=>`<a data-q="${esc(q)}">${esc(lbl)}</a>`).join("")}</div></div></div>
  <div class="wrap">
  <div class="tiles">
-  <button class="tile" data-go='{"v":"tav","tab":"chi"}'><span class="ic">⚖️</span><b>Chi decide?</b><span>Ogni atto di governo: chi lo compie, con quale consenso o parere.</span></button>
-  <button class="tile" data-go='{"v":"tav","tab":"chiedo"}'><span class="ic">✋</span><b>Che cosa chiedo, e a chi?</b><span>Per ogni fratello: permessi, richieste e come presentarle.</span></button>
-  <button class="tile" data-go='{"v":"tav","tab":"scad"}'><span class="ic">🗓️</span><b>Scadenze</b><span>Relazioni, rendiconti e adempimenti lungo l’anno.</span></button>
-  <button class="tile" data-go='{"v":"doc","id":"${S.lang}-01"}'><span class="ic">📖</span><b>Le Costituzioni</b><span>Il fondamento: tutti gli altri libri le applicano.</span></button>
+  <button class="tile" data-go='{"v":"tav","tab":"chi"}'><span class="ic">⚖️</span><b>${esc(t("tile1_t"))}</b><span>${esc(t("tile1_d"))}</span></button>
+  <button class="tile" data-go='{"v":"tav","tab":"chiedo"}'><span class="ic">✋</span><b>${esc(t("tile2_t"))}</b><span>${esc(t("tile2_d"))}</span></button>
+  <button class="tile" data-go='{"v":"tav","tab":"scad"}'><span class="ic">🗓️</span><b>${esc(t("tile3_t"))}</b><span>${esc(t("tile3_d"))}</span></button>
+  <button class="tile" data-go='{"v":"doc","id":"${S.lang}-01"}'><span class="ic">📖</span><b>${esc(t("tile4_t"))}</b><span>${esc(t("tile4_d"))}</span></button>
  </div>
- ${S.lang!=="it"?`<div class="notice">Le traduzioni seguono il testo di ottobre 2026 e non sono ancora aggiornate alla revisione del 23 ottobre: in caso di differenza fa fede il testo italiano. I rinvii che si toccano e «Chi decide?» sono per ora disponibili solo in italiano.</div>`:""}
+ ${S.lang!=="it"?`<div class="notice">${esc(t("notice_tavole_only_it"))}</div>`:""}
  ${bookList()}
- <div class="legend"><span class="st ok"><i></i>Testo approvato: solo il Capitolo Generale può modificarlo.</span><span class="st"><i></i>Testo rivisto nell’ottobre 2026, da rivedere dopo il II Capitolo Generale.</span><span>Testi raccolti il ${BUILD}. Tocca un rinvio sottolineato (es. Cost., n. 21) per leggerlo senza perdere il segno.</span></div>
+ <div class="legend"><span class="st ok"><i></i>${esc(t("legend_approved"))}</span><span class="st"><i></i>${esc(t("legend_revised"))}</span><span>${esc(t("legend_collected").split("{0}").join(BUILD))}</span></div>
  </div>`;
  $("#bq").onkeydown=e=>{if(e.key==="Enter")doSearch(e.target.value)};$("#bgo").onclick=()=>doSearch($("#bq").value)}
 function doSearch(q){q=(q||"").trim();if(!q)return;$("#q").value=q;go({v:"res",q,mode:"q"})}
@@ -284,12 +434,12 @@ function jump(q){for(const [t,rx] of JUMP){const m=q.match(rx);if(!m)continue;co
 function renderSearch(s){S.docMode=false;S.q=s.q;S.mode=s.mode||"q";$("#q").value=s.q;const v=$("#view");v.scrollTop=0;S.art=null;S.terms=[];S.stem=false;S.cnt={};
  const am=S.q.match(/^(?:art(?:t)?\.?|n\.?|nn\.?|n°|numero)\s*(\d{1,4})$/i);const dd=scope();let res=[];
  const jt=S.lang==="it"?jump(S.q):null;
- let top=`<div class="seg"><button data-mode="q" class="${S.mode==="q"?"on":""}">Per argomento</button><button data-mode="w" class="${S.mode==="w"?"on":""}">Parole esatte</button></div>`;
+ let top=`<div class="seg"><button data-mode="q" class="${S.mode==="q"?"on":""}">${esc(t("seg_topic"))}</button><button data-mode="w" class="${S.mode==="w"?"on":""}">${esc(t("seg_words"))}</button></div>`;
  if(jt)top=`<div class="hit" data-peek="${jt.d.id}|${jt.i}"><div class="ctx"><span class="doc">${esc(labelOf(jt.d,jt.i))}</span> · ${esc(jt.d.title)}</div><div class="tx">${esc(jt.d.b[jt.i].x.slice(0,300))}${jt.d.b[jt.i].x.length>300?" …":""}</div></div>`+top;
  if(am){S.art=+am[1];for(const d of dd){const hits=[];d.b.forEach((b,i)=>{if(b.n===S.art&&b.t==="p")hits.push(i)});if(hits.length)res.push({d,hits})}}
  else if(S.mode==="q"){S.stem=true;S.qres=rankQ(S.q);S.terms=S.qres.stems;S.rxs=S.qres.rxs;S.rxsMain=S.qres.rxsMain;const L2=S.qres.list;for(const c of L2)S.cnt[c.d.id]=(S.cnt[c.d.id]||0)+1;
-  if(!L2.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>Nessun passo pertinente per «${esc(S.q)}»</b><p>Prova con altre parole (anche una sola, es. <i>obbedienza</i>).</p></div></div>`;return}
-  let h=`<div class="wrap">${top}<div class="ans" id="ans"><h4>Risposta alla domanda</h4><button class="tool" onclick="askClaude()">✨ Rispondi con Claude</button><span class="sm">Claude cerca nei testi e risponde citando gli articoli</span></div><p class="summary">I passi che riguardano «${esc(S.q)}», in ordine di pertinenza. Sono mostrati solo i passi che contengono la parola più specifica della domanda.</p>`;
+  if(!L2.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>${esc(t("empty_q_title").split("{0}").join(S.q))}</b><p>${esc(t("empty_q_hint"))}</p></div></div>`;return}
+  let h=`<div class="wrap">${top}<div class="ans" id="ans"><h4>${esc(t("ans_title"))}</h4><button class="tool" onclick="askClaude()">${esc(t("ans_btn"))}</button><span class="sm">${esc(t("ans_sm"))}</span></div><p class="summary">${esc(t("summary_q").split("{0}").join(S.q))}</p>`;
   let th="";if(S.lang==="it"){const d15=byId["it-15"];const okT=S.qres.ok;let n=0;
    for(const t of tavole()){if(t.code>"E")continue;for(const g of t.groups)for(const i of g.rows){if(n>=4)break;const b=d15.b[i];if(!okT(Z(b)))continue;const cs=cells(b.x);const r=(d15.R[i]||[]).find(r=>r[3]==="15");if(!r)continue;const tg=target("15",r[4]);if(!tg)continue;n++;
      th+=`<div class="hit" data-peek="it-15|${tg.i}"><div class="ctx"><span class="doc">${t.code==="E"?"Che cosa chiedo, e a chi?":"Chi decide?"}</span> · ${esc(g.who)}${g.mode&&t.code!=="E"?" · "+g.mode[1]:""} · art. ${r[4]}</div><div class="tx">${hl(b.x.slice(cs[0][0],cs[0][1]),Z(b).slice(cs[0][0],cs[0][1]),S.terms)}${cs.length>2&&t.code==="E"?`<br><span style="font-size:14.5px;color:#444">${esc(b.x.slice(cs[1][0],cs[1][1]))}</span>`:""}</div></div>`}}
@@ -297,9 +447,9 @@ function renderSearch(s){S.docMode=false;S.q=s.q;S.mode=s.mode||"q";$("#q").valu
   h+=th;for(const c of L2)h+=hitHtml(c.d,c.i,true);v.innerHTML=h+"</div>";return}
  else{S.terms=parse(S.q);for(const d of dd){const hits=[];d.b.forEach((b,i)=>{if(b.t==="rh")return;const z=Z(b);if(S.terms.every(t=>z.indexOf(t)>=0))hits.push(i)});if(hits.length)res.push({d,hits})}}
  S.res=res;
- if(!res.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>Nessun risultato per «${esc(S.q)}»</b><p>Prova con meno parole o passa a «Per argomento».</p></div></div>`;return}
- const tot=res.reduce((a,r)=>a+r.hits.length,0);let h=`<div class="wrap">${top}<p class="summary"><b>${tot}</b> ${tot===1?"risultato":"risultati"} in <b>${res.length}</b> ${res.length===1?"libro":"libri"} — «${esc(S.q)}»</p>`;
- for(const r of res){h+=`<div class="group"><h3 data-open="${r.d.id}" data-blk="${r.hits[0]}"><span>${r.d.num} · ${esc(r.d.title)}</span><span class="k">${r.hits.length} ›</span></h3>`;r.hits.slice(0,8).forEach(i=>h+=hitHtml(r.d,i));if(r.hits.length>8)h+=`<div class="more" data-open="${r.d.id}" data-blk="${r.hits[0]}">… altri ${r.hits.length-8}: apri il libro</div>`;h+="</div>"}
+ if(!res.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>${esc(t("empty_w_title").split("{0}").join(S.q))}</b><p>${esc(t("empty_w_hint"))}</p></div></div>`;return}
+ const tot=res.reduce((a,r)=>a+r.hits.length,0);let h=`<div class="wrap">${top}<p class="summary"><b>${tot}</b> ${tot===1?t("word_result_1"):t("word_result_n")} in <b>${res.length}</b> ${res.length===1?t("word_book_1"):t("word_book_n")} — «${esc(S.q)}»</p>`;
+ for(const r of res){h+=`<div class="group"><h3 data-open="${r.d.id}" data-blk="${r.hits[0]}"><span>${r.d.num} · ${esc(r.d.title)}</span><span class="k">${r.hits.length} ›</span></h3>`;r.hits.slice(0,8).forEach(i=>h+=hitHtml(r.d,i));if(r.hits.length>8)h+=`<div class="more" data-open="${r.d.id}" data-blk="${r.hits[0]}">${esc(t("more_open").split("{0}").join(r.hits.length-8))}</div>`;h+="</div>"}
  v.innerHTML=h+"</div>"}
 function hitHtml(d,i,showDoc){const b=d.b[i];let x=b.x,z=Z(b),pre="",suf="";
  if(x.length>420){const rr=S.art?[]:ranges(z,S.terms);const p=rr.length?rr[0][0]:0;let s=Math.max(0,p-140),e=Math.min(x.length,p+280);if(s>0){const k=x.indexOf(" ",s);if(k>=0&&k<p)s=k+1;pre="… "}if(e<x.length){const k=x.lastIndexOf(" ",e);if(k>p)e=k;suf=" …"}x=x.slice(s,e);z=z.slice(s,e)}
@@ -310,9 +460,9 @@ function hitHtml(d,i,showDoc){const b=d.b[i];let x=b.x,z=Z(b),pre="",suf="";
 /* ---------- lettore */
 function renderDoc(d,blk,useHl){S.doc=d;S.docMode=true;const v=$("#view");const terms=(S.art||!useHl)?[]:S.terms;const all=d.b.map((_,i)=>i);
  const fn=d.b.findIndex(b=>b.t==="n");let body;
- if(fn>0)body=blocksHtml(d,all.slice(0,fn),terms,{ids:1,rev:1})+`<h3 id="notes">Note</h3>`+blocksHtml(d,all.slice(fn),terms,{ids:1});else body=blocksHtml(d,all,terms,{ids:1,rev:1});
+ if(fn>0)body=blocksHtml(d,all.slice(0,fn),terms,{ids:1,rev:1})+`<h3 id="notes">${esc(t("doc_notes_h"))}</h3>`+blocksHtml(d,all.slice(fn),terms,{ids:1});else body=blocksHtml(d,all,terms,{ids:1,rev:1});
  const hasArt=d.b.some(b=>b.t==="p"&&b.n);
- v.innerHTML=`<div class="rhead"><div class="in"><button class="chip" onclick="back()">←</button><div class="ti"><b>${d.num} · ${esc(d.title)}</b>${stHtml(d)}</div><button class="chip" onclick="openToc()">Indice</button>${hasArt?`<input id="jump" type="number" inputmode="numeric" min="1" placeholder="${unit(d.num)}">`:""}</div><div class="occ" id="occ"><span id="hc"></span><button class="chip" onclick="step(-1)">▲</button><button class="chip" onclick="step(1)">▼</button></div></div><div class="reader">${d.lang==="it"&&/rivisto/.test(stOf(d)[1])&&d.b.slice(0,30).some(b=>/in rosso/.test(b.x))?`<div class="notice" style="font-family:var(--sans)">In questa app il testo è riportato per intero senza colori: le parti che nel file Word sono in rosso qui non si distinguono.</div>`:""}${body}</div>`;
+ v.innerHTML=`<div class="rhead"><div class="in"><button class="chip" onclick="back()">←</button><div class="ti"><b>${d.num} · ${esc(d.title)}</b>${stHtml(d)}</div><button class="chip" onclick="openToc()">${esc(t("doc_index_btn"))}</button>${hasArt?`<input id="jump" type="number" inputmode="numeric" min="1" placeholder="${unit(d.num)}">`:""}</div><div class="occ" id="occ"><span id="hc"></span><button class="chip" onclick="step(-1)">▲</button><button class="chip" onclick="step(1)">▼</button></div></div><div class="reader">${d.lang==="it"&&stOf(d)[0]==="rev"&&d.b.slice(0,30).some(b=>/in rosso/.test(b.x))?`<div class="notice" style="font-family:var(--sans)">${esc(t("doc_red_notice"))}</div>`:""}${body}</div>`;
  S.marks=[...v.querySelectorAll(".reader mark")];S.cur=-1;
  const j=$("#jump");if(j)j.onkeydown=e=>{if(e.key==="Enter"){const i=idx(d).art.get(+e.target.value);if(i!=null){goBlock(i);e.target.blur()}else e.target.style.background="#fdd"}};
  if(blk!=null){const m=S.marks.findIndex(m=>{const p=m.closest("[id]");return p&&p.id==="b"+blk});if(m>=0)setCur(m);else goBlock(blk)}else v.scrollTop=0;
@@ -321,9 +471,9 @@ function hcount(){const o=$("#occ");if(!o)return;o.classList.toggle("on",S.marks
 function setCur(i){if(!S.marks.length)return;if(S.marks[S.cur])S.marks[S.cur].classList.remove("cur");S.cur=(i+S.marks.length)%S.marks.length;const m=S.marks[S.cur];m.classList.add("cur");m.scrollIntoView({block:"center"});hcount()}
 window.step=n=>setCur(S.cur+n);
 function goBlock(i){const e=document.getElementById("b"+i);if(!e)return;const v=$("#view");const rh=document.querySelector(".rhead");v.scrollTop+=e.getBoundingClientRect().top-v.getBoundingClientRect().top-(rh?rh.offsetHeight:0)-10;e.classList.remove("flash");void e.offsetWidth;e.classList.add("flash")}
-function openToc(){const d=S.doc,a=$("#drawer");let h=`<div class="phead"><b>Indice — ${esc(d.title)}</b><button class="x" onclick="closeDrawer()">✕</button></div><div class="pbody toc">`;let n=0;
+function openToc(){const d=S.doc,a=$("#drawer");let h=`<div class="phead"><b>${esc(t("toc_title").split("{0}").join(d.title))}</b><button class="x" onclick="closeDrawer()">✕</button></div><div class="pbody toc">`;let n=0;
  d.b.forEach((b,i)=>{if(b.t==="h"&&b.l<=2){n++;h+=`<a class="${b.l===2?"l2":""}" data-toc="${i}">${esc(b.x)}</a>`}});
- if(d.b.some(b=>b.t==="n"))h+=`<a data-toc="notes">Note</a>`;if(!n)h+=`<p class="summary">Questo libro non ha titoli di sezione.</p>`;
+ if(d.b.some(b=>b.t==="n"))h+=`<a data-toc="notes">${esc(t("toc_notes"))}</a>`;if(!n)h+=`<p class="summary">${esc(t("toc_empty"))}</p>`;
  a.innerHTML=h+"</div>";a.classList.add("on");$("#shade").className="on"}
 function closeDrawer(){$("#drawer").classList.remove("on");if(!PK.length)$("#shade").className=""}
 /* ---------- scheda (rinvio aperto) */
@@ -339,11 +489,11 @@ function drawPeek(){const {d,i}=PK[PK.length-1];const p=$("#peek");const list=ar
  const rank=n=>n==="01"?0:n==="02"?1:n==="03"?2:3;const outs=[...out.values()].sort((a,c)=>rank(a[3])-rank(c[3])||a[3].localeCompare(c[3])||String(a[4]).localeCompare(String(c[4]),undefined,{numeric:true}));
  const byBook=new Map();for(const c of cb){if(!byBook.has(c.d.num))byBook.set(c.d.num,[]);byBook.get(c.d.num).push(c)}
  let h=`<div class="phead">${PK.length>1?`<button class="x" onclick="PK.pop();drawPeek()">←</button>`:""}<b>${esc(labelOf(d,i))}<br><span class="st ${stOf(d)[0]}" style="font-weight:400"><i></i>${esc(d.title)}</span></b><button class="x" onclick="closePeek()">✕</button></div><div class="pbody"><div class="ptext">${blocksHtml(d,list,null)}${notes.length?`<div class="plab">Note</div>`+blocksHtml(d,notes,null):""}</div>`;
- if(outs.length)h+=`<div class="plab">Si fonda su · rinvia a</div><div class="links">${outs.map(r=>`<span class="lk ${r[3]==="01"?"top":""} rf" data-t="${r[3]}" data-k="${r[4]}">${esc(refLabel(r[3],r[4],r[5]))}</span>`).join("")}</div>`;
- if(cb.length){h+=`<div class="plab">Citato da · sviluppato in (${cb.length})</div>`;for(const [num,L] of [...byBook].sort((a,c)=>a[0].localeCompare(c[0])))h+=`<div class="links" style="margin-bottom:6px">${L.slice(0,40).map(c=>`<span class="lk" data-peek="${c.d.id}|${c.o>=0?c.o:c.bi}" ${c.o<0?`data-raw="1"`:""}>${esc(c.o>=0?labelOf(c.d,c.o):labelOf(c.d,c.bi))}</span>`).join("")}</div>`}
- h+=`<div class="pact"><button data-open="${d.id}" data-blk="${i}">Apri nel libro</button><button class="sec" id="cpy">Copia la citazione</button></div></div>`;
+ if(outs.length)h+=`<div class="plab">${esc(t("peek_based_on"))}</div><div class="links">${outs.map(r=>`<span class="lk ${r[3]==="01"?"top":""} rf" data-t="${r[3]}" data-k="${r[4]}">${esc(refLabel(r[3],r[4],r[5]))}</span>`).join("")}</div>`;
+ if(cb.length){h+=`<div class="plab">${esc(t("peek_cited_by").split("{0}").join(cb.length))}</div>`;for(const [num,L] of [...byBook].sort((a,c)=>a[0].localeCompare(c[0])))h+=`<div class="links" style="margin-bottom:6px">${L.slice(0,40).map(c=>`<span class="lk" data-peek="${c.d.id}|${c.o>=0?c.o:c.bi}" ${c.o<0?`data-raw="1"`:""}>${esc(c.o>=0?labelOf(c.d,c.o):labelOf(c.d,c.bi))}</span>`).join("")}</div>`}
+ h+=`<div class="pact"><button data-open="${d.id}" data-blk="${i}">${esc(t("peek_open_book"))}</button><button class="sec" id="cpy">${esc(t("peek_copy"))}</button></div></div>`;
  p.innerHTML=h;p.classList.add("on");$("#shade").className="on pk";document.body.classList.add("pk");p.querySelector(".pbody").scrollTop=0;
- $("#cpy").onclick=e=>{const t=`${d.title}, ${b.t==="n"?"nota "+b.n:b.s?b.s:unit(d.num)+" "+b.n}`;try{navigator.clipboard.writeText(t)}catch(x){}e.target.textContent="Copiata";setTimeout(()=>e.target.textContent="Copia la citazione",1200)}}
+ $("#cpy").onclick=e=>{const ct=`${d.title}, ${b.t==="n"?t("note_word")+" "+b.n:b.s?b.s:unit(d.num)+" "+b.n}`;try{navigator.clipboard.writeText(ct)}catch(x){}e.target.textContent=t("peek_copied");setTimeout(()=>e.target.textContent=t("peek_copy"),1200)}}
 function closePeek(silent){PK.length=0;$("#peek").classList.remove("on");document.body.classList.remove("pk");if(!$("#drawer").classList.contains("on"))$("#shade").className=""}
 /* ---------- tavole: chi decide */
 let TAV=null;
@@ -358,24 +508,25 @@ function tavole(){if(TAV)return TAV;TAV=[];const d=byId["it-15"];if(!d)return TA
  for(const t of TAV)for(const g of t.groups){let who=t.code==="A"?"Superiore Generale":t.code==="D"?"Vescovo e Santa Sede":(g.title.match(/^(.*?)(?:,|:| decide| propone|$)/)||["",g.title])[1].replace(/^(?:Il|La|Lo|I|Gli|L[’'])\s*/,"");g.who=who.charAt(0).toUpperCase()+who.slice(1);
   const T=g.title;g.mode=/consenso/i.test(T)?["c","col consenso del Consiglio"]:/collegialmente/i.test(T)?["s","collegialmente col Consiglio"]:/parere/i.test(T)&&!/propone/i.test(T)?["p","col parere del Consiglio"]:/da solo/i.test(T)?["","da solo"]:/propone/i.test(T)?["","propone · istruisce · dà il parere"]:/doveri/i.test(T)?["","doveri e termini"]:null}
  return TAV}
-const TABS={chi:["Chi decide?","ABCD","Scegli chi compie l’atto, oppure scrivi che cosa cerchi. Ogni riga rimanda all’articolo de «Il servizio dell’autorità», che cita Costituzioni e Direttorio."],chiedo:["Che cosa chiedo, e a chi?","E",""],scad:["Scadenze","F",""]};
+const TABS={get chi(){return [t("tile1_t"),"ABCD",t("tab_chi_d")]},get chiedo(){return [t("tile2_t"),"E",""]},get scad(){return [t("tile3_t"),"F",""]}};
 function renderTav(s){const v=$("#view");const d=byId["it-15"];const T=tavole();const tab=TABS[s.tab]||TABS.chi;const tavs=T.filter(t=>tab[1].includes(t.code));
  const groups=tavs.flatMap(t=>t.groups);const whos=[...new Set(groups.map(g=>g.who))];const f=nz(s.f||"").trim().split(/\s+/).filter(Boolean);
  let h=`<div class="wrap"><div class="tabs">${Object.entries(TABS).map(([k,t])=>`<button class="${k===(s.tab||"chi")?"on":""}" data-tab="${k}">${t[0]}</button>`).join("")}</div>`;
- if(!d||!T.length){v.innerHTML=h+`<div class="empty">Tavole non disponibili.</div></div>`;return}
- h+=`<input class="filter" id="tf" type="search" placeholder="Cerca: es. noviziato, viaggio, alienazione…" value="${esc(s.f||"")}">`;
- if(whos.length>1)h+=`<div class="chips"><button class="${!s.who?"on":""}" data-who="">Tutti</button>${whos.map(w=>`<button class="${s.who===w?"on":""}" data-who="${esc(w)}">${esc(w)}</button>`).join("")}</div>`;
- h+=`<div id="tlist"></div><p class="summary" style="margin-top:18px">Fonte: «Il servizio dell’autorità», Parte terza, Tavole ${tab[1].split("").join(", ")}. ${S.lang!=="it"?"Disponibile per ora solo in italiano.":""}</p></div>`;
+ if(!d||!T.length){v.innerHTML=h+`<div class="empty">${esc(t("tav_unavailable"))}</div></div>`;return}
+ h+=`<input class="filter" id="tf" type="search" placeholder="${esc(t("tav_filter_ph"))}" value="${esc(s.f||"")}">`;
+ if(whos.length>1)h+=`<div class="chips"><button class="${!s.who?"on":""}" data-who="">${esc(t("tav_all"))}</button>${whos.map(w=>`<button class="${s.who===w?"on":""}" data-who="${esc(w)}">${esc(w)}</button>`).join("")}</div>`;
+ h+=`<div id="tlist"></div><p class="summary" style="margin-top:18px">${esc(t("tav_source").split("{0}").join(tab[1].split("").join(", ")))} ${S.lang!=="it"?esc(t("tav_only_it")):""}</p></div>`;
  v.innerHTML=h;v.scrollTop=0;
+ const ua=t("unit_art").charAt(0).toUpperCase()+t("unit_art").slice(1);const tnone=t("tav_none");
  const draw=()=>{const ff=nz($("#tf").value).trim().split(/\s+/).filter(Boolean);let o="",tot=0;
   if(!ff.length&&!s.who&&tab[2])o+=`<p class="summary">${tab[2]}</p>`;
-  for(const t of tavs){for(const g of t.groups){if(s.who&&g.who!==s.who)continue;const rows=g.rows.filter(i=>{const z=Z(d.b[i]);return ff.every(w=>z.includes(w))});if(!rows.length)continue;tot+=rows.length;
-    o+=`<div class="gt">${esc(t.groups.length>1||t.code<"D"?(t.code==="A"?"Il Superiore Generale · ":"")+g.title:t.title)}</div>`;if(g.note.length&&!ff.length)o+=`<div class="gn">${esc(g.note.join(" "))}</div>`;
+  for(const tv of tavs){for(const g of tv.groups){if(s.who&&g.who!==s.who)continue;const rows=g.rows.filter(i=>{const z=Z(d.b[i]);return ff.every(w=>z.includes(w))});if(!rows.length)continue;tot+=rows.length;
+    o+=`<div class="gt">${esc(tv.groups.length>1||tv.code<"D"?(tv.code==="A"?"Il Superiore Generale · ":"")+g.title:tv.title)}</div>`;if(g.note.length&&!ff.length)o+=`<div class="gn">${esc(g.note.join(" "))}</div>`;
     const hd=g.head||[];let ti=hd.findIndex(x=>/^(Atto|Che cosa)$/i.test(x));if(ti<0)ti=0;
     for(const i of rows){const cs=cells(d.b[i].x);o+=`<div class="row"><div class="a">${richRange(d,i,cs[ti][0],cs[ti][1],null)}</div>`;
      cs.forEach((c,k)=>{if(k===ti||k===cs.length-1)return;o+=`<div class="f"><i>${esc(hd[k]||"")}</i>${richRange(d,i,c[0],c[1],null)}</div>`});
-     const last=cs[cs.length-1];o+=`<div class="m">${g.mode&&tab[1]==="ABCD"?`<span class="mode ${g.mode[0]}">${esc(g.who)} · ${g.mode[1]}</span>`:""}<span class="lk">Art. ${richRange(d,i,last[0],last[1],null)}</span></div></div>`}}}
-  $("#tlist").innerHTML=o||`<div class="empty">Nessuna voce trovata.</div>`};
+     const last=cs[cs.length-1];o+=`<div class="m">${g.mode&&tab[1]==="ABCD"?`<span class="mode ${g.mode[0]}">${esc(g.who)} · ${g.mode[1]}</span>`:""}<span class="lk">${esc(ua)} ${richRange(d,i,last[0],last[1],null)}</span></div></div>`}}}
+  $("#tlist").innerHTML=o||`<div class="empty">${esc(tnone)}</div>`};
  draw();$("#tf").oninput=()=>{CURV.f=$("#tf").value;draw()}}
 /* ---------- eventi */
 document.addEventListener("click",e=>{const t=e.target;let el;
@@ -404,8 +555,8 @@ function mdLite(s){s=esc(s).replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");s=s.replace(
 document.addEventListener("click",e=>{const el=e.target.closest("[data-cl]");if(!el)return;const [l,k,n]=el.dataset.cl.split("|");const d=byId[S.lang+"-"+l];if(!d)return;const i=d.b.findIndex(b=>b.n===+n&&b.t===k);if(i>=0)openPeek(d,i)});
 let ASKCTRL=null;
 window.askClaude=async function(){if(!SAMPLE)return;const box=$("#ans");const q=S.q;if(ASKCTRL)ASKCTRL.abort();ASKCTRL=new AbortController();
- const show=(txt,done)=>{box.innerHTML=`<h4>Risposta alla domanda</h4><div class="ansbody">${mdLite(txt||"Claude sta cercando nei testi…")}</div>${done?'<p class="sm" style="margin:8px 0 0">Verifica sempre sul testo: tocca i riferimenti [..] per aprire l\'articolo.</p>':""}`};show("");
- const prompt=`Sei l'assistente di ricerca sulla normativa dell'Istituto Figli di Sant'Anna (FSA). Rispondi in italiano, con precisione canonica e senza ornamenti.
+ const show=(txt,done)=>{box.innerHTML=`<h4>${esc(t("ans_title"))}</h4><div class="ansbody">${mdLite(txt||t("ask_searching"))}</div>${done?`<p class="sm" style="margin:8px 0 0">${esc(t("ask_verify"))}</p>`:""}`};show("");
+ const prompt=`Sei l'assistente di ricerca sulla normativa dell'Istituto Figli di Sant'Anna (FSA). Rispondi in ${LANGFULL[S.lang]}, con precisione canonica e senza ornamenti.
 Hai due strumenti: «cerca» (cerca i passi più pertinenti: passa parole chiave e sinonimi; usalo più volte con parole diverse) e «leggi» (legge per intero un articolo o una nota dato libro e numero).
 Regole:
 - Rispondi SOLO in base ai testi trovati con gli strumenti; non usare conoscenze esterne e non inventare articoli.
@@ -419,7 +570,7 @@ DOMANDA: ${q}`;
  try{const r=await SAMPLE(prompt,{signal:ASKCTRL.signal,cache:false,modelTier:"default",onText:({text})=>show(text),tools:[
   {name:"cerca",description:"Cerca nella normativa i passi più pertinenti a delle parole chiave (con sinonimi). Restituisce fino a 10 passi con riferimento, sezione e testo.",inputSchema:{type:"object",properties:{parole:{type:"string",description:"parole chiave e sinonimi separati da spazi"}},required:["parole"]},execute:async i=>toolCerca(i)},
   {name:"leggi",description:"Legge per intero un articolo (o una nota) di un libro.",inputSchema:{type:"object",properties:{libro:{type:"string",description:"numero del libro, es. 01, 02, 06a, 15"},numero:{type:"integer"},nota:{type:"boolean",description:"true se è il numero di una nota"}},required:["libro","numero"]},execute:async i=>toolLeggi(i)}]});show(r.text,true)}
- catch(e){box.innerHTML=`<h4>Risposta alla domanda</h4><p>${e&&e.code==="rate_limited"?"Troppe richieste: riprova fra un minuto.":"Non sono riuscito a rispondere ("+esc(String(e&&(e.message||e.code)||e))+")."}</p><button class="tool" onclick="askClaude()">Riprova</button>`}}
+ catch(e){box.innerHTML=`<h4>${esc(t("ans_title"))}</h4><p>${e&&e.code==="rate_limited"?esc(t("ask_rate")):esc(t("ask_fail").split("{0}").join(String(e&&(e.message||e.code)||e)))}</p><button class="tool" onclick="askClaude()">${esc(t("ask_retry"))}</button>`}}
 render();
 
 
