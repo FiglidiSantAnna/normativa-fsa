@@ -1,4 +1,4 @@
-# Normativa FSA
+# Normative FSA
 
 I libri normativi dell'Istituto Figli di Sant'Anna in un'unica app: ricerca in tutti i testi, rinvii che si aprono, tavole «Chi decide?».
 
