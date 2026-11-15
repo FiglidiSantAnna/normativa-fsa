@@ -380,7 +380,7 @@ function rankQ(str){
  for(const c of cand){let s=0,mt=0;const hh=hnz(c.b.h||"");c.tfs.forEach((tf,k)=>{if(tf){mt++;s+=idf[k]*(1+Math.log(tf));if(hh.includes(stems[k]))s+=0.6*idf[k]}});
   s*=Math.pow(mt/T.length,2.2);s/=1+0.25*Math.log(1+c.b.x.length/300);if(c.b.t==="n")s*=0.8;if(c.d.num==="01")s*=1.15;else if(c.d.num==="02")s*=1.08;
   const z=Z(c.b);for(const p of PR)if(p.test(z))s*=1.9;c.s=s;c.mt=mt}
- let need=T.length<=2?T.length:Math.ceil(T.length/2);
+ let need=T.length;
  const pick=n=>cand.filter(c=>c.tfs[top]&&c.mt>=n);
  let list=pick(need);while(list.length<3&&need>1){need--;list=pick(need)}
  list.sort((a,b)=>b.s-a.s);
