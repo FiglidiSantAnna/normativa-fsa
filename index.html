@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Normativa FSA">
+<meta name="theme-color" content="#1f3a5f">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Normativa FSA</title>
+<style>
+:root{--ink:#1d2433;--navy:#1f3a5f;--navy2:#2c5282;--gold:#a5813f;--gold2:#f3ead7;--paper:#fbf8f2;--card:#fff;--line:#e6dfd0;--muted:#6b7280;--mark:#ffe58a;--cur:#ffb454;--ok:#2f7d4f;--rev:#b7791f;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{font:16px/1.5 var(--sans);color:var(--ink);background:var(--paper);display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+header{background:var(--navy);color:#fff;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;display:flex;gap:10px;align-items:center;flex:none}
+header .brand{font-weight:650;letter-spacing:.2px;background:none;border:0;color:#fff;padding:6px 4px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+header .brand svg{width:22px;height:22px}
+.hsearch{flex:1;min-width:0;display:flex}
+.hsearch input{flex:1;min-width:0;font-size:16px;padding:8px 12px;border:0;border-radius:18px;outline:none;background:#ffffff22;color:#fff}
+.hsearch input::placeholder{color:#ffffffaa}
+.hsearch input:focus{background:#fff;color:var(--ink)}
+.hbtn{background:#ffffff1f;border:0;color:#fff;border-radius:16px;padding:7px 11px;font-size:14px;white-space:nowrap}
+#langsel{background:#ffffff1f;color:#fff;border:0;border-radius:16px;padding:7px 8px;font-size:14px}
+#langsel option{color:#000}
+main{flex:1;min-height:0;display:flex;position:relative}
+#view{flex:1;min-width:0;overflow:auto;-webkit-overflow-scrolling:touch;padding:0 0 calc(40px + env(safe-area-inset-bottom))}
+.wrap{max-width:820px;margin:0 auto;padding:16px}
+h2.sec{font:600 13px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:26px 0 10px}
+/* home */
+.hero{background:linear-gradient(180deg,var(--navy) 0,#27497a 100%);color:#fff;padding:22px 16px 26px}
+.hero .in{max-width:788px;margin:0 auto}
+.hero h1{font:600 26px/1.15 var(--serif);margin:0 0 4px}
+.hero p{margin:0 0 16px;opacity:.85;font-size:15px}
+.bigsearch{display:flex;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px #0003}
+.bigsearch input{flex:1;min-width:0;border:0;outline:0;font-size:17px;padding:14px 14px;color:var(--ink)}
+.bigsearch button{border:0;background:var(--gold);color:#fff;font-weight:600;padding:0 18px}
+.hint{font-size:13px;opacity:.85;margin-top:10px;line-height:1.9}
+.hint a{color:#fff;text-decoration:underline;cursor:pointer;margin-right:12px;white-space:nowrap;display:inline-block}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px}
+@media(min-width:700px){.tiles{grid-template-columns:repeat(4,1fr)}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:left;display:flex;flex-direction:column;gap:6px;min-height:112px;box-shadow:0 1px 2px #0000000a}
+.tile:active{transform:scale(.98)}
+.tile .ic{width:34px;height:34px;border-radius:10px;background:var(--gold2);display:grid;place-items:center;font-size:18px}
+.tile b{font-size:16px;line-height:1.2}
+.tile span{font-size:13px;color:var(--muted);line-height:1.3}
+.books{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.bk{display:flex;gap:10px;align-items:center;padding:11px 12px;border-top:1px solid var(--line);cursor:pointer}
+.bk:first-child{border-top:0}
+.bk:active{background:#f4efe3}
+.bk .n{flex:none;width:36px;font:600 13px var(--sans);color:var(--gold)}
+.bk .t{flex:1;min-width:0}
+.bk .t b{display:block;font-weight:600;line-height:1.25}
+.bk .c{flex:none;background:var(--navy);color:#fff;border-radius:10px;font-size:12px;padding:1px 7px}
+.st{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);line-height:1.2}
+.st i{width:8px;height:8px;border-radius:50%;background:var(--rev);flex:none}
+.st.ok i{background:var(--ok)}
+.legend{font-size:13px;color:var(--muted);margin:10px 2px;display:flex;flex-direction:column;gap:4px}
+.notice{background:#fff8e6;border:1px solid #ecd9a6;border-radius:10px;padding:10px 12px;font-size:14px;margin:12px 0}
+/* risultati */
+.summary{color:var(--muted);font-size:14px;margin:4px 2px 12px}
+.seg{display:inline-flex;background:#ece5d6;border-radius:10px;padding:3px;margin:0 0 10px}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:8px;font-size:14px;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px #0002}
+.hit{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin:0 0 9px;cursor:pointer}
+.hit:active{background:#f7f2e7}
+.hit .ctx{font-size:12.5px;color:var(--muted);margin-bottom:3px}
+.hit .ctx .doc{color:var(--navy2);font-weight:600}
+.hit .tx{font-family:var(--serif);font-size:16px;line-height:1.5}
+.group h3{font-size:15px;margin:18px 2px 8px;color:var(--navy);display:flex;justify-content:space-between;gap:8px;cursor:pointer}
+.group h3 .k{color:var(--muted);font-weight:400;font-size:13px;white-space:nowrap}
+.more{font-size:13px;color:var(--navy2);padding:2px 4px 8px;cursor:pointer}
+mark{background:var(--mark);border-radius:2px;padding:0 1px;color:inherit}
+mark.cur{background:var(--cur)}
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+.ans{background:#eef4fb;border:1px solid #cfe0f3;border-radius:12px;padding:12px 14px;margin:0 0 12px;display:none}
+body.can-ask .ans{display:block}
+.ans h4{margin:0 0 8px;font-size:14px;color:var(--navy)}
+.ansbody p{margin:6px 0}.ansbody ul{margin:6px 0;padding-left:20px}
+a.cit{color:var(--navy2);font-weight:600;cursor:pointer;white-space:nowrap}
+.tool{background:var(--navy);color:#fff;border:0;border-radius:9px;padding:8px 12px;font-size:14px}
+.sm{font-size:12.5px;color:var(--muted);margin-left:8px}
+/* lettore */
+.rhead{position:sticky;top:0;z-index:5;background:#fbf8f2f2;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:8px 12px}
+.rhead .in{max-width:788px;margin:0 auto;display:flex;gap:8px;align-items:center}
+.rhead .ti{flex:1;min-width:0}
+.rhead .ti b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px}.rhead .st{font-size:11.5px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:16px;padding:6px 11px;font-size:13.5px;white-space:nowrap}
+.rhead input{width:74px;font-size:16px;padding:5px 8px;border:1px solid var(--line);border-radius:16px;text-align:center}
+.occ{display:none;max-width:788px;margin:6px auto 0;font-size:13px;color:var(--muted);align-items:center;gap:8px}
+.occ.on{display:flex}
+.reader{font-family:var(--serif);font-size:17.5px;line-height:1.62;max-width:720px;margin:0 auto;padding:10px 18px 60px}
+.reader p{margin:.55em 0;white-space:pre-line}
+.reader p.art{margin-top:1.05em}
+.reader p.note{font-size:14.5px;color:#444;line-height:1.5}
+.reader h2,.reader h3,.reader h4,.reader h5{font-family:var(--sans);color:var(--navy);line-height:1.25;margin:1.6em 0 .5em}
+.reader h2{font-size:21px;border-bottom:2px solid var(--gold);padding-bottom:6px}
+.reader h3{font-size:17.5px}.reader h4{font-size:15.5px;color:var(--gold)}.reader h5{font-size:15px;color:var(--gold)}
+.badge{font:650 13.5px var(--sans);background:var(--navy);color:#fff;border-radius:7px;padding:2px 7px;margin-right:7px;cursor:pointer;white-space:nowrap;vertical-align:1px}
+.badge.note{background:#8a8f99}
+.badge small{font-weight:500;opacity:.8;margin-left:5px}
+a.rf{color:var(--navy2);text-decoration:underline;text-decoration-color:#a5813f99;text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:pointer}
+sup.nt{font:600 11.5px var(--sans);color:var(--gold);cursor:pointer;padding:0 2px}
+.flash{animation:fl 1.6s}
+@keyframes fl{0%{background:#ffe58a}100%{background:transparent}}
+table.tb{border-collapse:collapse;width:100%;font:14.5px/1.4 var(--sans);margin:.8em 0;display:block;overflow-x:auto}
+table.tb td,table.tb th{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left;min-width:70px}
+table.tb th{background:var(--gold2);font-weight:600}
+/* indice / pannelli */
+#drawer,#peek{position:absolute;z-index:20;background:var(--card);box-shadow:0 0 30px #0004;display:none;flex-direction:column}
+#drawer{top:0;bottom:0;left:0;width:min(86vw,360px)}
+#drawer.on,#peek.on{display:flex}
+#shade{position:absolute;inset:0;background:#0006;z-index:15;display:none}
+#shade.on{display:block}
+.phead{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);flex:none}
+.phead b{flex:1;min-width:0;font-size:15px;line-height:1.25}
+.x{border:0;background:#eee6d6;border-radius:50%;width:32px;height:32px;font-size:16px;flex:none}
+.pbody{overflow:auto;-webkit-overflow-scrolling:touch;padding:10px 14px calc(18px + env(safe-area-inset-bottom));flex:1}
+.toc a{display:block;padding:8px 6px;border-bottom:1px solid #f0eadc;font-size:14.5px;cursor:pointer;line-height:1.3}
+.toc a.l2{padding-left:20px;font-size:13.5px;color:#444}
+#peek{left:0;right:0;bottom:0;max-height:82%;border-radius:16px 16px 0 0}
+@media(min-width:980px){#peek{left:auto;top:0;max-height:none;width:440px;border-radius:0}#shade.pk{display:none}body.pk #view{margin-right:440px}}
+.ptext{font-family:var(--serif);font-size:16.5px;line-height:1.58}
+.ptext p{margin:.5em 0;white-space:pre-line}
+.ptext p.note{font-size:14px;color:#444}
+.plab{font:600 12px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--gold);margin:16px 0 6px}
+.links{display:flex;flex-wrap:wrap;gap:6px}
+.lk{border:1px solid var(--line);background:#faf6ec;border-radius:14px;padding:5px 10px;font-size:13.5px;cursor:pointer}
+.lk.top{border-color:var(--navy);background:#eef2f8}
+.pact{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.pact button{flex:1;border:0;border-radius:10px;padding:10px;background:var(--navy);color:#fff;font-size:14.5px}
+.pact button.sec{background:#ece5d6;color:var(--ink)}
+/* tavole */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:18px;padding:8px 14px;white-space:nowrap;font-size:14.5px}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.filter{width:100%;font-size:16px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;margin:0 0 10px;background:#fff}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px}
+.chips button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:6px 12px;font-size:13.5px;white-space:nowrap}
+.chips button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.gt{font:600 15px var(--sans);color:var(--navy);margin:18px 2px 4px}
+.gn{font-size:13px;color:var(--muted);margin:0 2px 8px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 8px}
+.row .a{font-size:15.5px;line-height:1.4}
+.row .f{font-size:14px;color:#333;margin-top:5px}
+.row .f i{font-style:normal;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;margin-right:6px}
+.row .m{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.mode{font-size:12.5px;border-radius:12px;padding:3px 9px;background:var(--gold2);color:#6b5320}
+.mode.c{background:#e3efe6;color:#245c3b}.mode.p{background:#e6eefa;color:#234a80}.mode.s{background:#f0e9f7;color:#553a7a}
+footer{flex:none;display:none}
+</style>
+</head>
+<body>
+<header>
+ <button class="brand" onclick="go({v:'home'})" title="Inizio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21a2 2 0 0 0 2 2h13v-4"/><path d="M9 7h6"/></svg><span id="brandt">Normativa FSA</span></button>
+ <div class="hsearch" id="hsearch"><input id="q" type="search" enterkeyhint="search" placeholder="Cerca o fai una domanda…"></div>
+ <select id="langsel" title="Lingua dei testi"></select>
+</header>
+<main>
+ <section id="view"></section>
+ <div id="shade"></div>
+ <aside id="drawer"></aside>
+ <aside id="peek"></aside>
+</main>
+<script src="data.js?v=1"></script>
+<script>
+const BUILD="14 novembre 2026";
+const LANGS={it:"Italiano",pt:"Português",es:"Español",en:"English"};
+const SIG={"01":"Cost.","02":"Dir.","03":"Ratio","04":"REFSA","05":"Reg. Capitolo","06":"RSFSA","06a":"Formulari","07":"Reg. visita","08":"Reg. Consulta","09":"Reg. ministeri","10":"NORFSA","10a":"Codice di condotta","10b":"Allegati NORFSA","12":"RITFSA","13":"Vademecum","13c":"Vademecum stranieri","14":"Devozionario","15":"Servizio dell’autorità","16":"Reg. convenzioni","17":"Cammino"};
+const UNITN={"01":1,"10":1,"17":1,"03":1};
+/* Stato di ogni libro: per cambiarlo basta modificare questa tabella. */
+const STATUS={"01":["ok","Approvate · 8 dicembre 2025"]};
+const STDEF=["rev","Testo rivisto · da rivedere dopo il Capitolo"];
+const GROUPS=[["Il fondamento",["01"]],["Direttorio e formazione",["02","03","17"]],["Governo e amministrazione",["15","04","05","07","08","16"]],["Ministeri, separazione, tutela",["09","06","06a","10","10a","10b"]],["Preghiera e vita quotidiana",["12","13","13c","14"]]];
+const norm1=new Map();
+function nc(c){let r=norm1.get(c);if(r===undefined){r=c.normalize("NFD")[0]||c;r=r.toLowerCase();if(r.length!==1)r=c;if(r==="’"||r==="‘"||r==="`"||r==="´")r="'";if(r==="“"||r==="”"||r==="«"||r==="»")r='"';if(r==="–"||r==="—")r="-";norm1.set(c,r)}return r}
+function nz(s){let o="";for(let i=0;i<s.length;i++)o+=nc(s[i]);return o}
+const Z=b=>b.z===undefined?(b.z=nz(b.x)):b.z;
+const docs=DATA.map(d=>{let h="";const b=d.b.map(x=>{if(x[0]==="h")h=x[2];return{t:x[0],l:x[1],x:x[2],n:x[3],s:x[4]||null,h}});const R={};if(d.r)for(const r of d.r)(R[r[0]]=R[r[0]]||[]).push(r);return{id:d.id,lang:d.lang,num:d.num,title:d.title,b,R,hasR:!!d.r}});
+const byId=Object.fromEntries(docs.map(d=>[d.id,d]));
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+let S={lang:"it",q:"",mode:"q",stem:false,terms:[],art:null,qres:null,res:null,cnt:{},marks:[],cur:-1,doc:null};
+const stOf=d=>d.lang!=="it"?(d.num==="01"?["ok","Traduzione delle Costituzioni approvate"]:["rev","Traduzione · da aggiornare al testo rivisto"]):(STATUS[d.num]||STDEF);
+const stHtml=d=>{const s=stOf(d);return `<span class="st ${s[0]}"><i></i>${esc(s[1])}</span>`};
+function scope(){return docs.filter(d=>d.lang===S.lang)}
+/* ---------- indici */
+function idx(d){if(d.ix)return d.ix;const art=new Map(),sec=new Map(),note=new Map(),own=new Array(d.b.length).fill(-1);let cur=-1;const ROM={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10};
+ d.b.forEach((b,i)=>{if(b.t==="h"){if(b.s){sec.set(b.s,i);cur=i}else{cur=d.num==="03"?cur:-1;if(d.num==="03"&&b.l===1){cur=-1;const m=b.x.match(/^CAPITOLO ([IVX]+)\b/);if(m&&ROM[m[1]]&&!sec.has(String(ROM[m[1]])))sec.set(String(ROM[m[1]]),i)}}}
+  else if(b.t==="p"&&b.n){if(!art.has(b.n))art.set(b.n,i);cur=i}
+  else if(b.t==="n"){note.set(b.n,i);cur=-2}
+  own[i]=b.t==="n"?-1:cur});
+ for(const bi in d.R)for(const r of d.R[bi])if(r[3]===""){const ni=note.get(r[4]);if(ni!=null)own[ni]=own[bi]>=0?own[bi]:-1}
+ return d.ix={art,sec,note,own}}
+function unit(num){return UNITN[num]?"n.":"art."}
+function labelOf(d,i){const b=d.b[i];if(b.t==="n")return `${SIG[d.num]||d.title}, nota ${b.n}`;if(b.s)return `${SIG[d.num]}, ${b.s}`;if(b.n)return `${SIG[d.num]||d.title}, ${unit(d.num)} ${b.n}`;return `${SIG[d.num]||d.title}${b.h?" · "+b.h:""}`}
+function target(t,k){const d=byId["it-"+t];if(!d)return null;const ix=idx(d);k=String(k);let i=(t==="03"||k.includes("."))?ix.sec.get(k):ix.art.get(+k);return i==null?null:{d,i}}
+let REV=null;
+function rev(){if(REV)return REV;REV=new Map();for(const d of docs){if(!d.hasR)continue;const ix=idx(d);for(const bi in d.R)for(const r of d.R[bi]){if(r[3]==="")continue;const a=r[4],b2=r[5];const keys=(typeof a==="number"&&typeof b2==="number")?Array.from({length:b2-a+1},(_,j)=>a+j):[a];let o=ix.own[bi];for(const k of keys){const key=r[3]+"|"+k;let L=REV.get(key);if(!L)REV.set(key,L=[]);L.push({d,bi:+bi,o})}}}return REV}
+function citedBy(d,i){const b=d.b[i];const key=d.num+"|"+(b.s||b.n);const L=(rev().get(key)||[]).filter(c=>!(c.d===d&&c.o===i));const seen=new Set(),out=[];for(const c of L){const k=c.d.id+"|"+(c.o>=0?c.o:"b"+c.bi);if(seen.has(k))continue;seen.add(k);out.push(c)}return out}
+/* ---------- ricerca */
+const STOP=new Set(("durante secondo presso verso senza entro oltre il lo la i gli le un uno una di a da in con su per tra fra e ed o ma che chi cui come quando dove quale quali quanto quanta quanti quante cosa cose deve devono devo dovere puo possono posso essere sono sia si non del dello della dei degli delle al allo alla ai agli alle dal dallo dalla dai dagli dalle nel nello nella nei negli nelle sul sullo sulla sui sugli sulle col mi ti ci vi se ne anche piu poi fa fare ha hanno ho viene vengono dev ogni tutti tutto quello quella questi questo questa queste quindi perche cioe fino mentre durante dopo prima ancora gia solo "+"os as um uma que quem deve devem pode podem o do da dos das no na nos nas ao aos pelo pela por para com sem sua seu "+"los el y en su sus cual cuando quien debe deben puede pueden las "+"the of to and is are what when who how do does must may can should be for on with by or an as at from that this it its which where why shall will whom").split(/\s+/));
+function stem(w){const n=w.length;return n<=4?w:n<=7?w.slice(0,n-1):w.slice(0,Math.max(5,Math.ceil(n*0.62)))}
+const hz=new Map();function hnz(h){let r=hz.get(h);if(r===undefined){r=nz(h);hz.set(h,r)}return r}
+const FAM=[["ammett","ammiss","ammess"],["obbed","ubbid"],["elegg","elett","elezion"],["dimett","dimiss","dimess"],["famig","famil"],["trasfer"],["alien","vend"]];
+function mkTerm(w){const s=stem(w);let alts=[s];for(const f of FAM)if(f.some(x=>w.startsWith(x))){alts=f;break}
+ const k=Math.max(3,w.length-s.length+3);const body="(?:"+alts.map(a=>a.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")\\p{L}{0,"+k+"}";
+ return{s,body,rx:new RegExp("(^|[^\\p{L}\\p{N}])("+body+")(?![\\p{L}\\p{N}])","gu")}}
+function rankQ(str){
+ const words=[...new Set((nz(str).match(/[\p{L}\p{N}']+/gu)||[]).filter(w=>!STOP.has(w)&&w.length>1))];
+ const T=words.map(mkTerm);const stems=T.map(t=>t.s),rxs=T.map(t=>t.rx);
+ if(!T.length)return{stems,rxs,list:[],ok:()=>false};
+ const cand=[];const df=T.map(()=>0);let N=0;
+ for(const d of scope())for(let i=0;i<d.b.length;i++){const b=d.b[i];if(b.t==="h"||b.t==="rh"||b.x.length<20)continue;N++;const z=Z(b);
+  let tfs=null;for(let k=0;k<T.length;k++){const m=z.match(rxs[k]);if(m){(tfs=tfs||new Array(T.length).fill(0))[k]=m.length;df[k]++}}
+  if(tfs)cand.push({d,i,b,tfs})}
+ const idf=df.map(x=>Math.log(1+N/(1+x)));
+ let top=0;for(let k=1;k<T.length;k++)if(idf[k]>idf[top]&&df[k]>0)top=k;if(!df[top])top=df.findIndex(x=>x>0);
+ const PR=[];for(let k=0;k<T.length-1;k++)PR.push(new RegExp("(?:^|[^\\p{L}\\p{N}])"+T[k].body+"(?:\\s+[\\p{L}']{1,5}){0,2}\\s+"+T[k+1].body+"(?![\\p{L}\\p{N}])","u"));
+ for(const c of cand){let s=0,mt=0;const hh=hnz(c.b.h||"");c.tfs.forEach((tf,k)=>{if(tf){mt++;s+=idf[k]*(1+Math.log(tf));if(hh.includes(stems[k]))s+=0.6*idf[k]}});
+  s*=Math.pow(mt/T.length,2.2);s/=1+0.25*Math.log(1+c.b.x.length/300);if(c.b.t==="n")s*=0.8;if(c.d.num==="01")s*=1.15;else if(c.d.num==="02")s*=1.08;
+  const z=Z(c.b);for(const p of PR)if(p.test(z))s*=1.9;c.s=s;c.mt=mt}
+ let need=T.length<=2?T.length:Math.ceil(T.length/2);
+ const pick=n=>cand.filter(c=>c.tfs[top]&&c.mt>=n);
+ let list=pick(need);while(list.length<3&&need>1){need--;list=pick(need)}
+ list.sort((a,b)=>b.s-a.s);
+ const ok=z=>{let mt=0,ht=false;rxs.forEach((r,k)=>{r.lastIndex=0;if(r.test(z)){mt++;if(k===top)ht=true}});return ht&&mt>=need};
+ const rxsMain=rxs.filter((r,k)=>df[k]>0&&idf[k]>=0.6*idf[top]);return{stems,rxs,rxsMain,list:list.slice(0,40),ok}}
+function parse(q){const t=[];const re=/"([^"]+)"|(\S+)/g;let m;while(m=re.exec(q)){const w=nz((m[1]||m[2]).replace(/[«»"]/g,"")).trim();if(w)t.push(w)}return t}
+function find(z,t,from){return z.indexOf(t,from)}
+function ranges(z,terms){const r=[];if(S.stem){for(const rx of ((S.docMode?S.rxsMain:S.rxs)||[])){rx.lastIndex=0;let m;while(m=rx.exec(z)){const st=m.index+m[1].length;r.push([st,st+m[2].length]);if(!m[0].length)rx.lastIndex++}}}else for(const t of terms){let i=find(z,t,0);while(i>=0){r.push([i,i+t.length]);i=find(z,t,i+t.length)}}r.sort((a,b)=>a[0]-b[0]);const m=[];for(const x of r){if(m.length&&x[0]<=m[m.length-1][1])m[m.length-1][1]=Math.max(m[m.length-1][1],x[1]);else m.push(x.slice())}return m}
+function hl(x,z,terms){if(!terms||!terms.length)return esc(x);const r=ranges(z,terms);let o="",p=0;for(const [a,b] of r){o+=esc(x.slice(p,a))+"<mark>"+esc(x.slice(a,b))+"</mark>";p=b}return o+esc(x.slice(p))}
+function richRange(d,bi,a,e,terms){const b=d.b[bi],x=b.x;const rs=(d.R[bi]||[]).filter(r=>r[1]>=a&&r[2]<=e).sort((p,q)=>p[1]-q[1]);const on=terms&&terms.length;const z=on?Z(b):null;const seg=(s,t)=>on?hl(x.slice(s,t),z.slice(s,t),terms):esc(x.slice(s,t));let o="",p=a;
+ for(const r of rs){if(r[1]<p)continue;o+=seg(p,r[1]);if(r[3]==="")o+=`<sup class="nt" data-d="${d.id}" data-k="${r[4]}">${r[4]}</sup>`;else o+=`<a class="rf" data-t="${r[3]}" data-k="${r[4]}">${seg(r[1],r[2])}</a>`;p=r[2]}
+ return o+seg(p,e)}
+function cells(x){const out=[];let p=0,i;while((i=x.indexOf(" ‖ ",p))>=0){out.push([p,i]);p=i+3}out.push([p,x.length]);return out}
+function blocksHtml(d,list,terms,opt){opt=opt||{};let h="",i=0;
+ while(i<list.length){const bi=list[i],b=d.b[bi];
+  if(b.t==="rh"||b.t==="r"){h+=`<table class="tb" id="b${opt.ids?bi:""}">`;while(i<list.length&&(d.b[list[i]].t==="r"||d.b[list[i]].t==="rh")){const k=list[i],r=d.b[k],tg=r.t==="rh"?"th":"td";h+=`<tr${opt.ids?` id="b${k}"`:""}>`+cells(r.x).map(c=>`<${tg}>${richRange(d,k,c[0],c[1],terms)}</${tg}>`).join("")+"</tr>";i++}h+="</table>";continue}
+  const id=opt.ids?` id="b${bi}"`:"";
+  if(b.t==="h"){const k=Math.min(b.l+1,5);h+=`<h${k}${id}>${richRange(d,bi,0,b.x.length,terms)}</h${k}>`}
+  else if(b.n&&(b.t==="p"||b.t==="n")){const off=(b.x.match(/^\d+\.\s*/)||[""])[0].length;let extra="";if(b.t==="p"&&opt.rev&&d.hasR){const c=citedBy(d,bi).length;if(c)extra=`<small>↩ ${c}</small>`}
+   h+=`<p${id} class="${b.t==="n"?"note":"art"}"><span class="badge ${b.t==="n"?"note":""}" data-d="${d.id}" data-i="${bi}">${b.n}${extra}</span>${richRange(d,bi,off,b.x.length,terms)}</p>`}
+  else h+=`<p${id}>${richRange(d,bi,0,b.x.length,terms)}</p>`;
+  i++}
+ return h}
+/* ---------- navigazione */
+const NAV=[];let CURV={v:"home"};
+function go(st,replace){if(!replace)NAV.push(CURV);CURV=st;try{history.pushState(st,"")}catch(e){}closePeek(true);closeDrawer();render()}
+function back(){if(PK.length){closePeek();return}if($("#drawer").classList.contains("on")){closeDrawer();return}CURV=NAV.pop()||{v:"home"};render()}
+window.addEventListener("popstate",()=>back());
+function render(){const s=CURV;$("#hsearch").style.visibility=s.v==="home"?"hidden":"visible";
+ if(s.v==="home")renderHome();else if(s.v==="res")renderSearch(s);else if(s.v==="doc")renderDoc(byId[s.id],s.blk,s.hl);else if(s.v==="tav")renderTav(s)}
+/* ---------- home */
+function bookRow(d,n){return `<div class="bk" data-open="${d.id}"><span class="n">${d.num}</span><span class="t"><b>${esc(d.title)}</b>${stHtml(d)}</span>${n?`<span class="c">${n}</span>`:""}</div>`}
+function bookList(cnt){const sc=scope(),m=Object.fromEntries(sc.map(d=>[d.num,d]));let h="";const used=new Set();
+ for(const [g,nums] of GROUPS){const ds=nums.map(n=>m[n]).filter(Boolean);if(!ds.length)continue;ds.forEach(d=>used.add(d.id));h+=`<h2 class="sec">${g}</h2><div class="books">${ds.map(d=>bookRow(d,cnt&&cnt[d.id])).join("")}</div>`}
+ const rest=sc.filter(d=>!used.has(d.id));if(rest.length)h+=`<h2 class="sec">Altri testi</h2><div class="books">${rest.map(d=>bookRow(d,cnt&&cnt[d.id])).join("")}</div>`;return h}
+function renderHome(){const v=$("#view");v.scrollTop=0;
+ v.innerHTML=`<div class="hero"><div class="in"><h1>La nostra normativa</h1><p>Tutti i libri dell’Istituto Figli di Sant’Anna, a partire dalle Costituzioni.</p>
+ <div class="bigsearch"><input id="bq" type="search" enterkeyhint="search" placeholder="Scrivi una domanda o un argomento"><button id="bgo">Cerca</button></div>
+ <div class="hint">Prova: <a data-q="chi ammette al noviziato">chi ammette al noviziato</a><a data-q="Cost. 21">Cost. 21</a><a data-q="Dir. 75">Dir. 75</a><a data-q="tempo di distensione">tempo di distensione</a></div></div></div>
+ <div class="wrap">
+ <div class="tiles">
+  <button class="tile" data-go='{"v":"tav","tab":"chi"}'><span class="ic">⚖️</span><b>Chi decide?</b><span>Ogni atto di governo: chi lo compie, con quale consenso o parere.</span></button>
+  <button class="tile" data-go='{"v":"tav","tab":"chiedo"}'><span class="ic">✋</span><b>Che cosa chiedo, e a chi?</b><span>Per ogni fratello: permessi, richieste e come presentarle.</span></button>
+  <button class="tile" data-go='{"v":"tav","tab":"scad"}'><span class="ic">🗓️</span><b>Scadenze</b><span>Relazioni, rendiconti e adempimenti lungo l’anno.</span></button>
+  <button class="tile" data-go='{"v":"doc","id":"${S.lang}-01"}'><span class="ic">📖</span><b>Le Costituzioni</b><span>Il fondamento: tutti gli altri libri le applicano.</span></button>
+ </div>
+ ${S.lang!=="it"?`<div class="notice">Le traduzioni seguono il testo di ottobre 2026 e non sono ancora aggiornate alla revisione del 23 ottobre: in caso di differenza fa fede il testo italiano. I rinvii che si toccano e «Chi decide?» sono per ora disponibili solo in italiano.</div>`:""}
+ ${bookList()}
+ <div class="legend"><span class="st ok"><i></i>Testo approvato: solo il Capitolo Generale può modificarlo.</span><span class="st"><i></i>Testo rivisto nell’ottobre 2026, da rivedere dopo il II Capitolo Generale.</span><span>Testi raccolti il ${BUILD}. Tocca un rinvio sottolineato (es. Cost., n. 21) per leggerlo senza perdere il segno.</span></div>
+ </div>`;
+ $("#bq").onkeydown=e=>{if(e.key==="Enter")doSearch(e.target.value)};$("#bgo").onclick=()=>doSearch($("#bq").value)}
+function doSearch(q){q=(q||"").trim();if(!q)return;$("#q").value=q;go({v:"res",q,mode:"q"})}
+/* ---------- risultati */
+const JUMP=[["01",/^(?:cost(?:ituzioni)?)\.?/i],["02",/^(?:dir(?:ettorio)?)\.?/i],["03",/^ratio(?: formationis)?/i],["04",/^(?:refsa|reg(?:olamento)?\.? ?econ(?:omico)?\.?)/i],["06",/^rsfsa/i],["10",/^(?:norfsa|normativa)/i],["15",/^(?:servizio|competenze)/i]];
+function jump(q){for(const [t,rx] of JUMP){const m=q.match(rx);if(!m)continue;const r=q.slice(m[0].length).match(/^\s*,?\s*(?:artt?\.?|nn?\.?)?\s*(\d+(?:\.\d+)*)\s*$/i);if(r)return target(t,r[1])}return null}
+function renderSearch(s){S.docMode=false;S.q=s.q;S.mode=s.mode||"q";$("#q").value=s.q;const v=$("#view");v.scrollTop=0;S.art=null;S.terms=[];S.stem=false;S.cnt={};
+ const am=S.q.match(/^(?:art(?:t)?\.?|n\.?|nn\.?|n°|numero)\s*(\d{1,4})$/i);const dd=scope();let res=[];
+ const jt=S.lang==="it"?jump(S.q):null;
+ let top=`<div class="seg"><button data-mode="q" class="${S.mode==="q"?"on":""}">Per argomento</button><button data-mode="w" class="${S.mode==="w"?"on":""}">Parole esatte</button></div>`;
+ if(jt)top=`<div class="hit" data-peek="${jt.d.id}|${jt.i}"><div class="ctx"><span class="doc">${esc(labelOf(jt.d,jt.i))}</span> · ${esc(jt.d.title)}</div><div class="tx">${esc(jt.d.b[jt.i].x.slice(0,300))}${jt.d.b[jt.i].x.length>300?" …":""}</div></div>`+top;
+ if(am){S.art=+am[1];for(const d of dd){const hits=[];d.b.forEach((b,i)=>{if(b.n===S.art&&b.t==="p")hits.push(i)});if(hits.length)res.push({d,hits})}}
+ else if(S.mode==="q"){S.stem=true;S.qres=rankQ(S.q);S.terms=S.qres.stems;S.rxs=S.qres.rxs;S.rxsMain=S.qres.rxsMain;const L2=S.qres.list;for(const c of L2)S.cnt[c.d.id]=(S.cnt[c.d.id]||0)+1;
+  if(!L2.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>Nessun passo pertinente per «${esc(S.q)}»</b><p>Prova con altre parole (anche una sola, es. <i>obbedienza</i>).</p></div></div>`;return}
+  let h=`<div class="wrap">${top}<div class="ans" id="ans"><h4>Risposta alla domanda</h4><button class="tool" onclick="askClaude()">✨ Rispondi con Claude</button><span class="sm">Claude cerca nei testi e risponde citando gli articoli</span></div><p class="summary">I passi che riguardano «${esc(S.q)}», in ordine di pertinenza. Sono mostrati solo i passi che contengono la parola più specifica della domanda.</p>`;
+  let th="";if(S.lang==="it"){const d15=byId["it-15"];const okT=S.qres.ok;let n=0;
+   for(const t of tavole()){if(t.code>"E")continue;for(const g of t.groups)for(const i of g.rows){if(n>=4)break;const b=d15.b[i];if(!okT(Z(b)))continue;const cs=cells(b.x);const r=(d15.R[i]||[]).find(r=>r[3]==="15");if(!r)continue;const tg=target("15",r[4]);if(!tg)continue;n++;
+     th+=`<div class="hit" data-peek="it-15|${tg.i}"><div class="ctx"><span class="doc">${t.code==="E"?"Che cosa chiedo, e a chi?":"Chi decide?"}</span> · ${esc(g.who)}${g.mode&&t.code!=="E"?" · "+g.mode[1]:""} · art. ${r[4]}</div><div class="tx">${hl(b.x.slice(cs[0][0],cs[0][1]),Z(b).slice(cs[0][0],cs[0][1]),S.terms)}${cs.length>2&&t.code==="E"?`<br><span style="font-size:14.5px;color:#444">${esc(b.x.slice(cs[1][0],cs[1][1]))}</span>`:""}</div></div>`}}
+   if(th)th=`<h2 class="sec" style="margin-top:6px">Dalle tavole «Chi decide?»</h2>`+th+`<h2 class="sec">Nei testi</h2>`}
+  h+=th;for(const c of L2)h+=hitHtml(c.d,c.i,true);v.innerHTML=h+"</div>";return}
+ else{S.terms=parse(S.q);for(const d of dd){const hits=[];d.b.forEach((b,i)=>{if(b.t==="rh")return;const z=Z(b);if(S.terms.every(t=>z.indexOf(t)>=0))hits.push(i)});if(hits.length)res.push({d,hits})}}
+ S.res=res;
+ if(!res.length){v.innerHTML=`<div class="wrap">${top}<div class="empty"><b>Nessun risultato per «${esc(S.q)}»</b><p>Prova con meno parole o passa a «Per argomento».</p></div></div>`;return}
+ const tot=res.reduce((a,r)=>a+r.hits.length,0);let h=`<div class="wrap">${top}<p class="summary"><b>${tot}</b> ${tot===1?"risultato":"risultati"} in <b>${res.length}</b> ${res.length===1?"libro":"libri"} — «${esc(S.q)}»</p>`;
+ for(const r of res){h+=`<div class="group"><h3 data-open="${r.d.id}" data-blk="${r.hits[0]}"><span>${r.d.num} · ${esc(r.d.title)}</span><span class="k">${r.hits.length} ›</span></h3>`;r.hits.slice(0,8).forEach(i=>h+=hitHtml(r.d,i));if(r.hits.length>8)h+=`<div class="more" data-open="${r.d.id}" data-blk="${r.hits[0]}">… altri ${r.hits.length-8}: apri il libro</div>`;h+="</div>"}
+ v.innerHTML=h+"</div>"}
+function hitHtml(d,i,showDoc){const b=d.b[i];let x=b.x,z=Z(b),pre="",suf="";
+ if(x.length>420){const rr=S.art?[]:ranges(z,S.terms);const p=rr.length?rr[0][0]:0;let s=Math.max(0,p-140),e=Math.min(x.length,p+280);if(s>0){const k=x.indexOf(" ",s);if(k>=0&&k<p)s=k+1;pre="… "}if(e<x.length){const k=x.lastIndexOf(" ",e);if(k>p)e=k;suf=" …"}x=x.slice(s,e);z=z.slice(s,e)}
+ const body=(pre+(S.art?esc(x):hl(x,z,S.terms))+suf).replace(/ ‖ /g," · ");
+ const ix=idx(d),o=ix.own[i];const where=b.t==="n"?labelOf(d,i):(o>=0?labelOf(d,o):(SIG[d.num]||d.num));
+ const ctx=`<span class="doc">${esc(where)}</span>`+(showDoc?` · ${esc(d.title)}`:"")+(b.h&&!(o>=0&&d.b[o].s)?` · ${esc(b.h)}`:"");
+ return `<div class="hit" data-open="${d.id}" data-blk="${i}"><div class="ctx">${ctx}</div><div class="tx">${body}</div></div>`}
+/* ---------- lettore */
+function renderDoc(d,blk,useHl){S.doc=d;S.docMode=true;const v=$("#view");const terms=(S.art||!useHl)?[]:S.terms;const all=d.b.map((_,i)=>i);
+ const fn=d.b.findIndex(b=>b.t==="n");let body;
+ if(fn>0)body=blocksHtml(d,all.slice(0,fn),terms,{ids:1,rev:1})+`<h3 id="notes">Note</h3>`+blocksHtml(d,all.slice(fn),terms,{ids:1});else body=blocksHtml(d,all,terms,{ids:1,rev:1});
+ const hasArt=d.b.some(b=>b.t==="p"&&b.n);
+ v.innerHTML=`<div class="rhead"><div class="in"><button class="chip" onclick="back()">←</button><div class="ti"><b>${d.num} · ${esc(d.title)}</b>${stHtml(d)}</div><button class="chip" onclick="openToc()">Indice</button>${hasArt?`<input id="jump" type="number" inputmode="numeric" min="1" placeholder="${unit(d.num)}">`:""}</div><div class="occ" id="occ"><span id="hc"></span><button class="chip" onclick="step(-1)">▲</button><button class="chip" onclick="step(1)">▼</button></div></div><div class="reader">${d.lang==="it"&&/rivisto/.test(stOf(d)[1])&&d.b.slice(0,30).some(b=>/in rosso/.test(b.x))?`<div class="notice" style="font-family:var(--sans)">In questa app il testo è riportato per intero senza colori: le parti che nel file Word sono in rosso qui non si distinguono.</div>`:""}${body}</div>`;
+ S.marks=[...v.querySelectorAll(".reader mark")];S.cur=-1;
+ const j=$("#jump");if(j)j.onkeydown=e=>{if(e.key==="Enter"){const i=idx(d).art.get(+e.target.value);if(i!=null){goBlock(i);e.target.blur()}else e.target.style.background="#fdd"}};
+ if(blk!=null){const m=S.marks.findIndex(m=>{const p=m.closest("[id]");return p&&p.id==="b"+blk});if(m>=0)setCur(m);else goBlock(blk)}else v.scrollTop=0;
+ hcount()}
+function hcount(){const o=$("#occ");if(!o)return;o.classList.toggle("on",S.marks.length>0);if(S.marks.length)$("#hc").textContent=`«${S.q}»: ${S.cur+1} di ${S.marks.length}`}
+function setCur(i){if(!S.marks.length)return;if(S.marks[S.cur])S.marks[S.cur].classList.remove("cur");S.cur=(i+S.marks.length)%S.marks.length;const m=S.marks[S.cur];m.classList.add("cur");m.scrollIntoView({block:"center"});hcount()}
+window.step=n=>setCur(S.cur+n);
+function goBlock(i){const e=document.getElementById("b"+i);if(!e)return;const v=$("#view");const rh=document.querySelector(".rhead");v.scrollTop+=e.getBoundingClientRect().top-v.getBoundingClientRect().top-(rh?rh.offsetHeight:0)-10;e.classList.remove("flash");void e.offsetWidth;e.classList.add("flash")}
+function openToc(){const d=S.doc,a=$("#drawer");let h=`<div class="phead"><b>Indice — ${esc(d.title)}</b><button class="x" onclick="closeDrawer()">✕</button></div><div class="pbody toc">`;let n=0;
+ d.b.forEach((b,i)=>{if(b.t==="h"&&b.l<=2){n++;h+=`<a class="${b.l===2?"l2":""}" data-toc="${i}">${esc(b.x)}</a>`}});
+ if(d.b.some(b=>b.t==="n"))h+=`<a data-toc="notes">Note</a>`;if(!n)h+=`<p class="summary">Questo libro non ha titoli di sezione.</p>`;
+ a.innerHTML=h+"</div>";a.classList.add("on");$("#shade").className="on"}
+function closeDrawer(){$("#drawer").classList.remove("on");if(!PK.length)$("#shade").className=""}
+/* ---------- scheda (rinvio aperto) */
+const PK=[];
+function artBlocks(d,i){const b=d.b[i],out=[i];if(b.t==="n")return out;for(let j=i+1;j<d.b.length&&out.length<70;j++){const c=d.b[j];if(c.t==="n")break;if(b.t==="h"){if(c.t==="h"&&(c.s||c.l<=b.l))break}else if(c.t==="h"||(c.t==="p"&&c.n))break;out.push(j)}return out}
+function refLabel(t,k,k2){return `${SIG[t]}${t==="03"?", ":", "+unit(t)+" "}${k}${k2?"–"+k2:""}`}
+function openPeek(d,i,keep){if(!keep)PK.length=PK.length;PK.push({d,i});drawPeek()}
+function drawPeek(){const {d,i}=PK[PK.length-1];const p=$("#peek");const list=artBlocks(d,i);const b=d.b[i];
+ const notes=[];const out=new Map();const ix=idx(d);
+ const collect=bi=>{for(const r of d.R[bi]||[]){if(r[3]===""){const ni=ix.note.get(r[4]);if(ni!=null&&!notes.includes(ni))notes.push(ni)}else{const tg=target(r[3],r[4]);if(tg&&!(tg.d===d&&tg.i===i))out.set(r[3]+"|"+r[4]+"|"+(r[5]||""),r)}}};
+ list.forEach(collect);notes.forEach(collect);
+ const cb=d.hasR&&b.t!=="n"?citedBy(d,i):[];
+ const rank=n=>n==="01"?0:n==="02"?1:n==="03"?2:3;const outs=[...out.values()].sort((a,c)=>rank(a[3])-rank(c[3])||a[3].localeCompare(c[3])||String(a[4]).localeCompare(String(c[4]),undefined,{numeric:true}));
+ const byBook=new Map();for(const c of cb){if(!byBook.has(c.d.num))byBook.set(c.d.num,[]);byBook.get(c.d.num).push(c)}
+ let h=`<div class="phead">${PK.length>1?`<button class="x" onclick="PK.pop();drawPeek()">←</button>`:""}<b>${esc(labelOf(d,i))}<br><span class="st ${stOf(d)[0]}" style="font-weight:400"><i></i>${esc(d.title)}</span></b><button class="x" onclick="closePeek()">✕</button></div><div class="pbody"><div class="ptext">${blocksHtml(d,list,null)}${notes.length?`<div class="plab">Note</div>`+blocksHtml(d,notes,null):""}</div>`;
+ if(outs.length)h+=`<div class="plab">Si fonda su · rinvia a</div><div class="links">${outs.map(r=>`<span class="lk ${r[3]==="01"?"top":""} rf" data-t="${r[3]}" data-k="${r[4]}">${esc(refLabel(r[3],r[4],r[5]))}</span>`).join("")}</div>`;
+ if(cb.length){h+=`<div class="plab">Citato da · sviluppato in (${cb.length})</div>`;for(const [num,L] of [...byBook].sort((a,c)=>a[0].localeCompare(c[0])))h+=`<div class="links" style="margin-bottom:6px">${L.slice(0,40).map(c=>`<span class="lk" data-peek="${c.d.id}|${c.o>=0?c.o:c.bi}" ${c.o<0?`data-raw="1"`:""}>${esc(c.o>=0?labelOf(c.d,c.o):labelOf(c.d,c.bi))}</span>`).join("")}</div>`}
+ h+=`<div class="pact"><button data-open="${d.id}" data-blk="${i}">Apri nel libro</button><button class="sec" id="cpy">Copia la citazione</button></div></div>`;
+ p.innerHTML=h;p.classList.add("on");$("#shade").className="on pk";document.body.classList.add("pk");p.querySelector(".pbody").scrollTop=0;
+ $("#cpy").onclick=e=>{const t=`${d.title}, ${b.t==="n"?"nota "+b.n:b.s?b.s:unit(d.num)+" "+b.n}`;try{navigator.clipboard.writeText(t)}catch(x){}e.target.textContent="Copiata";setTimeout(()=>e.target.textContent="Copia la citazione",1200)}}
+function closePeek(silent){PK.length=0;$("#peek").classList.remove("on");document.body.classList.remove("pk");if(!$("#drawer").classList.contains("on"))$("#shade").className=""}
+/* ---------- tavole: chi decide */
+let TAV=null;
+function tavole(){if(TAV)return TAV;TAV=[];const d=byId["it-15"];if(!d)return TAV;let tav=null,grp=null;
+ d.b.forEach((b,i)=>{if(b.t==="h"){const m=b.x.match(/^Tavola ([A-F]) · (.*)/);if(m){tav={code:m[1],title:m[2],groups:[],intro:[]};TAV.push(tav);grp=null;return}
+   const g=b.x.match(/^([A-F])\.(\d+) · (.*)/);if(g&&tav){grp={code:g[1]+"."+g[2],title:g[3],note:[],head:null,rows:[],tav};tav.groups.push(grp);return}
+   if(tav&&b.l<=2){tav=null;grp=null}return}
+  if(!tav||b.t==="n")return;
+  if(b.t==="rh"){if(!grp||grp.head){grp={code:tav.code,title:tav.title,note:tav.intro.slice(),head:null,rows:[],tav};tav.groups.push(grp)}grp.head=b.x.split(" ‖ ");return}
+  if(b.t==="r"){if(grp)grp.rows.push(i);return}
+  if(b.t==="p"){if(grp&&!grp.head)grp.note.push(b.x);else if(!grp)tav.intro.push(b.x)}});
+ for(const t of TAV)for(const g of t.groups){let who=t.code==="A"?"Superiore Generale":t.code==="D"?"Vescovo e Santa Sede":(g.title.match(/^(.*?)(?:,|:| decide| propone|$)/)||["",g.title])[1].replace(/^(?:Il|La|Lo|I|Gli|L[’'])\s*/,"");g.who=who.charAt(0).toUpperCase()+who.slice(1);
+  const T=g.title;g.mode=/consenso/i.test(T)?["c","col consenso del Consiglio"]:/collegialmente/i.test(T)?["s","collegialmente col Consiglio"]:/parere/i.test(T)&&!/propone/i.test(T)?["p","col parere del Consiglio"]:/da solo/i.test(T)?["","da solo"]:/propone/i.test(T)?["","propone · istruisce · dà il parere"]:/doveri/i.test(T)?["","doveri e termini"]:null}
+ return TAV}
+const TABS={chi:["Chi decide?","ABCD","Scegli chi compie l’atto, oppure scrivi che cosa cerchi. Ogni riga rimanda all’articolo de «Il servizio dell’autorità», che cita Costituzioni e Direttorio."],chiedo:["Che cosa chiedo, e a chi?","E",""],scad:["Scadenze","F",""]};
+function renderTav(s){const v=$("#view");const d=byId["it-15"];const T=tavole();const tab=TABS[s.tab]||TABS.chi;const tavs=T.filter(t=>tab[1].includes(t.code));
+ const groups=tavs.flatMap(t=>t.groups);const whos=[...new Set(groups.map(g=>g.who))];const f=nz(s.f||"").trim().split(/\s+/).filter(Boolean);
+ let h=`<div class="wrap"><div class="tabs">${Object.entries(TABS).map(([k,t])=>`<button class="${k===(s.tab||"chi")?"on":""}" data-tab="${k}">${t[0]}</button>`).join("")}</div>`;
+ if(!d||!T.length){v.innerHTML=h+`<div class="empty">Tavole non disponibili.</div></div>`;return}
+ h+=`<input class="filter" id="tf" type="search" placeholder="Cerca: es. noviziato, viaggio, alienazione…" value="${esc(s.f||"")}">`;
+ if(whos.length>1)h+=`<div class="chips"><button class="${!s.who?"on":""}" data-who="">Tutti</button>${whos.map(w=>`<button class="${s.who===w?"on":""}" data-who="${esc(w)}">${esc(w)}</button>`).join("")}</div>`;
+ h+=`<div id="tlist"></div><p class="summary" style="margin-top:18px">Fonte: «Il servizio dell’autorità», Parte terza, Tavole ${tab[1].split("").join(", ")}. ${S.lang!=="it"?"Disponibile per ora solo in italiano.":""}</p></div>`;
+ v.innerHTML=h;v.scrollTop=0;
+ const draw=()=>{const ff=nz($("#tf").value).trim().split(/\s+/).filter(Boolean);let o="",tot=0;
+  if(!ff.length&&!s.who&&tab[2])o+=`<p class="summary">${tab[2]}</p>`;
+  for(const t of tavs){for(const g of t.groups){if(s.who&&g.who!==s.who)continue;const rows=g.rows.filter(i=>{const z=Z(d.b[i]);return ff.every(w=>z.includes(w))});if(!rows.length)continue;tot+=rows.length;
+    o+=`<div class="gt">${esc(t.groups.length>1||t.code<"D"?(t.code==="A"?"Il Superiore Generale · ":"")+g.title:t.title)}</div>`;if(g.note.length&&!ff.length)o+=`<div class="gn">${esc(g.note.join(" "))}</div>`;
+    const hd=g.head||[];let ti=hd.findIndex(x=>/^(Atto|Che cosa)$/i.test(x));if(ti<0)ti=0;
+    for(const i of rows){const cs=cells(d.b[i].x);o+=`<div class="row"><div class="a">${richRange(d,i,cs[ti][0],cs[ti][1],null)}</div>`;
+     cs.forEach((c,k)=>{if(k===ti||k===cs.length-1)return;o+=`<div class="f"><i>${esc(hd[k]||"")}</i>${richRange(d,i,c[0],c[1],null)}</div>`});
+     const last=cs[cs.length-1];o+=`<div class="m">${g.mode&&tab[1]==="ABCD"?`<span class="mode ${g.mode[0]}">${esc(g.who)} · ${g.mode[1]}</span>`:""}<span class="lk">Art. ${richRange(d,i,last[0],last[1],null)}</span></div></div>`}}}
+  $("#tlist").innerHTML=o||`<div class="empty">Nessuna voce trovata.</div>`};
+ draw();$("#tf").oninput=()=>{CURV.f=$("#tf").value;draw()}}
+/* ---------- eventi */
+document.addEventListener("click",e=>{const t=e.target;let el;
+ if(el=t.closest(".rf")){e.stopPropagation();const tg=target(el.dataset.t,el.dataset.k);if(tg)openPeek(tg.d,tg.i);return}
+ if(el=t.closest(".nt")){const d=byId[el.dataset.d];const i=idx(d).note.get(+el.dataset.k);if(i!=null)openPeek(d,i);return}
+ if(el=t.closest(".badge[data-i]")){openPeek(byId[el.dataset.d],+el.dataset.i);return}
+ if(el=t.closest("[data-peek]")){const [id,i]=el.dataset.peek.split("|");const d=byId[id];if(el.dataset.raw){go({v:"doc",id,blk:+i})}else openPeek(d,+i);return}
+ if(el=t.closest("[data-toc]")){closeDrawer();const k=el.dataset.toc;if(k==="notes")document.getElementById("notes").scrollIntoView();else goBlock(+k);return}
+ if(el=t.closest("[data-open]")){go({v:"doc",id:el.dataset.open,blk:el.dataset.blk==null?null:+el.dataset.blk,hl:CURV.v==="res"&&!!el.closest("#view")});return}
+ if(el=t.closest("[data-go]")){go(JSON.parse(el.dataset.go));return}
+ if(el=t.closest("[data-q]")){doSearch(el.dataset.q);return}
+ if(el=t.closest("[data-mode]")){go({v:"res",q:S.q,mode:el.dataset.mode},true);return}
+ if(el=t.closest("[data-tab]")){go({v:"tav",tab:el.dataset.tab},true);return}
+ if(el=t.closest("[data-who]")){go({...CURV,who:el.dataset.who},true);return}
+ if(t.id==="shade"){closePeek();closeDrawer()}});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){doSearch(e.target.value);e.target.blur()}});
+const LS=$("#langsel");for(const k in LANGS){const o=document.createElement("option");o.value=k;o.textContent=k.toUpperCase();o.title=LANGS[k];LS.appendChild(o)}
+LS.onchange=()=>{S.lang=LS.value;S.terms=[];NAV.length=0;go({v:"home"},true)};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")back()});
+/* ---------- risposta con Claude (solo dove disponibile) */
+let SAMPLE=null;(async()=>{try{if(window.claude&&claude.use){SAMPLE=await claude.use("sample");if(SAMPLE)document.body.classList.add("can-ask")}}catch(e){}})();
+function refOf(d,b){return b.n?`${d.num} ${b.t==="n"?"nota":"n."} ${b.n}`:`${d.num} (sezione «${b.h||"—"}»)`}
+function toolCerca({parole}){return rankQ(String(parole||"")).list.slice(0,10).map(c=>({rif:refOf(c.d,c.b),libro:c.d.title,sezione:c.b.h||"",testo:c.b.x.slice(0,1000)}))}
+function toolLeggi({libro,numero,nota}){const d=scope().find(x=>x.num===String(libro).toLowerCase());if(!d)return{errore:"libro non trovato: "+libro};const i=d.b.findIndex(b=>b.n===+numero&&b.t===(nota?"n":"p"));if(i<0)return{errore:"numero non trovato"};return{rif:refOf(d,d.b[i]),libro:d.title,sezione:d.b[i].h||"",testo:artBlocks(d,i).map(k=>d.b[k].x).join("\n").slice(0,3500)}}
+function mdLite(s){s=esc(s).replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");s=s.replace(/\[(\d{2}[a-z]?) (n\.|nota) ?(\d+)\]/g,(m,l,k,n)=>`<a class="cit" data-cl="${l}|${k==="nota"?"n":"p"}|${n}">${m}</a>`);const out=[];let ul=false;for(const line of s.split(/\n/)){const m=line.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)/);if(m){if(!ul){out.push("<ul>");ul=true}out.push("<li>"+m[1]+"</li>")}else{if(ul){out.push("</ul>");ul=false}if(line.trim())out.push("<p>"+line+"</p>")}}if(ul)out.push("</ul>");return out.join("")}
+document.addEventListener("click",e=>{const el=e.target.closest("[data-cl]");if(!el)return;const [l,k,n]=el.dataset.cl.split("|");const d=byId[S.lang+"-"+l];if(!d)return;const i=d.b.findIndex(b=>b.n===+n&&b.t===k);if(i>=0)openPeek(d,i)});
+let ASKCTRL=null;
+window.askClaude=async function(){if(!SAMPLE)return;const box=$("#ans");const q=S.q;if(ASKCTRL)ASKCTRL.abort();ASKCTRL=new AbortController();
+ const show=(txt,done)=>{box.innerHTML=`<h4>Risposta alla domanda</h4><div class="ansbody">${mdLite(txt||"Claude sta cercando nei testi…")}</div>${done?'<p class="sm" style="margin:8px 0 0">Verifica sempre sul testo: tocca i riferimenti [..] per aprire l\'articolo.</p>':""}`};show("");
+ const prompt=`Sei l'assistente di ricerca sulla normativa dell'Istituto Figli di Sant'Anna (FSA). Rispondi in italiano, con precisione canonica e senza ornamenti.
+Hai due strumenti: «cerca» (cerca i passi più pertinenti: passa parole chiave e sinonimi; usalo più volte con parole diverse) e «leggi» (legge per intero un articolo o una nota dato libro e numero).
+Regole:
+- Rispondi SOLO in base ai testi trovati con gli strumenti; non usare conoscenze esterne e non inventare articoli.
+- Le Costituzioni (libro 01) prevalgono su tutti gli altri testi; il Direttorio (02), la Ratio (03) e i regolamenti le applicano. Parti sempre da ciò che dicono le Costituzioni, poi il Direttorio, poi i regolamenti. Se due testi sembrano divergere, dillo chiaramente.
+- Se la risposta dipende da un caso (chi, quando, con quale consenso), distingui i casi.
+- Cita ogni affermazione con il riferimento esatto fra parentesi quadre nel formato [01 n. 21] oppure [02 nota 5] (numero del libro + numero dell'articolo).
+- Struttura: prima una risposta breve (2-4 righe), poi i dettagli a punti con le citazioni; infine, solo se serve, una riga su ciò che nei testi non si trova.
+Lingua dei testi consultati: ${S.lang.toUpperCase()}.
+
+DOMANDA: ${q}`;
+ try{const r=await SAMPLE(prompt,{signal:ASKCTRL.signal,cache:false,modelTier:"default",onText:({text})=>show(text),tools:[
+  {name:"cerca",description:"Cerca nella normativa i passi più pertinenti a delle parole chiave (con sinonimi). Restituisce fino a 10 passi con riferimento, sezione e testo.",inputSchema:{type:"object",properties:{parole:{type:"string",description:"parole chiave e sinonimi separati da spazi"}},required:["parole"]},execute:async i=>toolCerca(i)},
+  {name:"leggi",description:"Legge per intero un articolo (o una nota) di un libro.",inputSchema:{type:"object",properties:{libro:{type:"string",description:"numero del libro, es. 01, 02, 06a, 15"},numero:{type:"integer"},nota:{type:"boolean",description:"true se è il numero di una nota"}},required:["libro","numero"]},execute:async i=>toolLeggi(i)}]});show(r.text,true)}
+ catch(e){box.innerHTML=`<h4>Risposta alla domanda</h4><p>${e&&e.code==="rate_limited"?"Troppe richieste: riprova fra un minuto.":"Non sono riuscito a rispondere ("+esc(String(e&&(e.message||e.code)||e))+")."}</p><button class="tool" onclick="askClaude()">Riprova</button>`}}
+render();
+
+
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
+ const had=!!navigator.serviceWorker.controller;let done=false;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!done){done=true;location.reload()}});
+ navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update().catch(()=>{})})}).catch(()=>{});
+}
+</script>
+</body>
+</html>

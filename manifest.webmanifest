@@ -1,0 +1,3 @@
+{"name":"Normativa FSA","short_name":"Normativa FSA","start_url":"./","scope":"./","display":"standalone","background_color":"#fbf8f2","theme_color":"#1f3a5f","lang":"it",
+"description":"I libri normativi dell'Istituto Figli di Sant'Anna: ricerca, rinvii e tavole delle competenze",
+"icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icons/icon-512-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
